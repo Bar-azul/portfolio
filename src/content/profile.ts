@@ -59,6 +59,15 @@ export const profile = {
       } as L,
     },
     {
+      period: "2025",
+      org: { he: "Microsoft", en: "Microsoft" } as L,
+      title: { he: "סדנת Agent Framework: סוכני ציות אוטומטיים", en: "Agent Framework workshop: automated compliance agents" } as L,
+      text: {
+        he: "סדנה מעשית במיקרוסופט: בניית מערכת מרובת סוכנים לציות רגולטורי עם Microsoft Agent Framework, כולל תזמור סדרתי, MCP, תקשורת בין סוכנים (A2A) ו-observability.",
+        en: "A hands-on workshop at Microsoft: building a multi-agent regulatory compliance system with Microsoft Agent Framework, covering sequential orchestration, MCP, agent-to-agent (A2A) communication and observability.",
+      } as L,
+    },
+    {
       period: "2020 – 2024",
       org: { he: "המכון הטכנולוגי חולון (HIT)", en: "Holon Institute of Technology (HIT)" } as L,
       title: { he: "B.Sc. במדעי המחשב", en: "B.Sc. Computer Science" } as L,

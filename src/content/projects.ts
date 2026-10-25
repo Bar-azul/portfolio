@@ -204,36 +204,35 @@ export const projects: Project[] = [
     kind: "paz",
     status: "production",
     year: "2025",
-    title: { he: "קליטת מוצרים ומבצעים ל-Wolt", en: "Wolt Catalog & Promotions Ingestion" },
+    title: { he: "נתוני מחירי סופרים מ-Wolt", en: "Supermarket Price Data from Wolt" },
     summary: {
-      he: "סנכרון מוצרים ומבצעים ל-Wolt בהיקף של יותר מ-200 סניפים, עם התאוששות מכשלים.",
-      en: "Product and promotion sync to Wolt across 200+ branches, with retry and failure recovery.",
+      he: "מערכת סקרייפינג שאוספת את כל המוצרים והמבצעים מ-Wolt לפי רשת, סניף ואזור לטובת השוואת מחירים, ורצה על יותר מ-200 סניפים.",
+      en: "A scraping system that collects every product and promotion from Wolt by chain, branch and area for price comparison, running across 200+ branches.",
     },
     problem: {
-      he: "עדכון קטלוג ומבצעים ידני ליותר מ-200 סניפים לא החזיק, ותקלה בסניף אחד עצרה את כל העדכון.",
-      en: "Updating catalog and promotions by hand for 200+ branches didn't scale, and one failing branch stalled the whole run.",
+      he: "כדי להשוות מחירים מול רשתות הסופרים היה צריך תמונה מלאה ועדכנית של המוצרים והמבצעים בכל סניף ובכל אזור, ואיסוף ידני של זה פשוט לא אפשרי.",
+      en: "Comparing prices against the supermarket chains needed a complete, current view of products and promotions in every branch and area, which is impossible to collect by hand.",
     },
     solution: {
-      he: "הרחבתי את תהליך הקליטה כך שכל סניף מטופל בנפרד דרך תורים, עם ניסיונות חוזרים, טיפול בכשלים וניטור ב-Application Insights.",
-      en: "I scaled the ingestion so each branch is processed independently through queues, with retries, failure handling and monitoring in Application Insights.",
+      he: "התחלתי מבניית מערכת סקרייפינג מעל ה-API של Wolt, שממפה את הרשתות והסניפים לפי אזור ושולפת את כל המוצרים, המחירים והמבצעים של כל סניף למבנה נתונים אחיד להשוואה. אחר כך הרחבתי אותה ליותר מ-200 סניפים: כל סניף מטופל בנפרד דרך תורים ב-Service Bus, עם ניסיונות חוזרים, טיפול בכשלים וניטור ב-Application Insights.",
+      en: "I started by building a scraping system on top of the Wolt API that maps chains and branches by area and pulls every product, price and promotion for each branch into one comparable data model. Then I scaled it past 200 branches: each branch runs independently through Service Bus queues, with retries, failure handling and monitoring in Application Insights.",
     },
     results: [
+      { he: "קטלוג מלא של מוצרים ומבצעים לפי רשת, סניף ואזור", en: "A full product and promotion catalog by chain, branch and area" },
       { he: "יותר מ-200 סניפים מסונכרנים", en: "200+ branches in sync" },
       { he: "כשל בסניף אחד לא עוצר את האחרים", en: "One failing branch no longer blocks the rest" },
     ],
     metric: { value: "200+", label: { he: "סניפים", en: "branches" } },
     topics: ["automation"],
-    tech: ["Python", "Azure Functions", "Service Bus", "Application Insights", "REST APIs"],
+    tech: ["Python", "REST APIs", "Azure Functions", "Service Bus", "Application Insights"],
     flow: [
-      { he: "קטלוג ומבצעים", en: "Catalog and promotions" },
+      { he: "מיפוי רשתות וסניפים לפי אזור", en: "Map chains and branches by area" },
+      { he: "Wolt API: מוצרים, מחירים ומבצעים", en: "Wolt API: products, prices, promotions" },
       { he: "תור Service Bus לכל סניף", en: "Service Bus queue per branch" },
       { he: "Azure Functions עם ניסיונות חוזרים", en: "Azure Functions with retries" },
-      { he: "Wolt API", en: "Wolt API" },
-      { he: "ניטור ב-App Insights", en: "App Insights monitoring" },
+      { he: "נתונים אחידים להשוואת מחירים", en: "Unified data for price comparison" },
     ],
   },
-
-  // ───────────────────────── Personal products ─────────────────────────
   {
     slug: "scam-checker",
     kind: "personal",
