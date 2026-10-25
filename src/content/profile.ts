@@ -19,11 +19,11 @@ export const profile = {
 
   about: {
     he: [
-      "אני מהנדס AI בפז חברת נפט, ואחראי על פתרונות AI מקצה לקצה: אני מתרגם צורך עסקי לארכיטקטורה, בוחר את הטכנולוגיה, מפתח ומעלה לפרודקשן.",
+      "אני מהנדס AI בפז קמעונאות ואנרגיה, ואחראי על פתרונות AI מקצה לקצה: אני מתרגם צורך עסקי לארכיטקטורה, בוחר את הטכנולוגיה, מפתח ומעלה לפרודקשן.",
       "רוב העבודה שלי היא סוכנים עם כלים, חילוץ נתונים ממסמכים ו-RAG, על Azure, עם הערכות איכות, ניטור וטיפול בכשלים. כלומר מערכות שממשיכות לעבוד גם אחרי הדמו.",
     ],
     en: [
-      "I'm an AI engineer at Paz Oil Company, where I own AI solutions end to end: I turn a business need into an architecture, choose the stack, build it and ship it to production.",
+      "I'm an AI engineer at Paz Retail and Energy, where I own AI solutions end to end: I turn a business need into an architecture, choose the stack, build it and ship it to production.",
       "Most of my work is tool-using agents, document extraction and RAG on Azure, with evaluations, monitoring and failure handling. In other words, systems that keep working after the demo.",
     ],
   },
@@ -42,7 +42,7 @@ export const profile = {
   experience: [
     {
       period: "2025 –",
-      org: { he: "פז חברת נפט", en: "Paz Oil Company" } as L,
+      org: { he: "פז קמעונאות ואנרגיה", en: "Paz Retail and Energy" } as L,
       title: { he: "מהנדס AI ואוטומציה", en: "AI & Automation Engineer" } as L,
       text: {
         he: "אחריות מקצה לקצה: מדרישות עסקיות לארכיטקטורה, שירותי Backend, אינטגרציות והשקות לפרודקשן. סוכני AI, RAG, חילוץ מסמכים, הערכות איכות, ו-Azure עם ניטור, ניסיונות חוזרים וטיפול בכשלים.",

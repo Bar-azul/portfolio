@@ -7,7 +7,7 @@ import type { Project } from "./types";
  * Order in this array = order on the site.
  */
 export const projects: Project[] = [
-  // ───────────────────────── Paz Oil Company ─────────────────────────
+  // ───────────────────────── Paz Retail and Energy ─────────────────────────
   {
     slug: "municipal-signage-agent",
     kind: "paz",
