@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #0f1720;
+  --color-surface: #17222e;
+  --color-surface-2: #1d2b39;
+  --color-line: #2a3a4a;
+  --color-ink: #e6edf2;
+  --color-muted: #8da0b1;
+  --color-signal: #ffb547;
+  --color-live: #5fd39a;
+  --font-sans: "IBM Plex Sans Hebrew", system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--color-canvas);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* The workflow-canvas dot grid used behind the hero and project pages */
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgb(141 160 177 / 0.16) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Hero graph: edges draw in, then a pulse runs through once */
+.edge {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.7s ease-out forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+.node-in {
+  opacity: 0;
+  animation: node-in 0.45s ease-out forwards;
+}
+@keyframes node-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.running {
+  animation: running 1.6s ease-in-out infinite;
+}
+@keyframes running {
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .edge { animation: none; stroke-dashoffset: 0; }
+  .node-in { animation: none; opacity: 1; }
+  .running { animation: none; }
+  .pulse { display: none; }
+}
