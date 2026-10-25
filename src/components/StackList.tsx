@@ -2,7 +2,7 @@
 
 import type { Locale } from "@/content/types";
 import { profile } from "@/content/profile";
-import { projects } from "@/content/projects";
+import { aiProjects as projects } from "@/content/projects";
 import { t } from "@/lib/i18n";
 import { useFilters } from "./FilterContext";
 

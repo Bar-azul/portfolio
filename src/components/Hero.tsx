@@ -19,16 +19,17 @@ export function Hero({ locale }: { locale: Locale }) {
           <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-ink/90">{t(profile.intro, locale)}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#projects"
+              href={profile.cv}
+              download
               className="rounded-lg bg-signal px-5 py-2.5 font-semibold text-canvas transition-colors hover:bg-[#ffc66f]"
             >
-              {t(ui.heroCtaProjects, locale)}
+              {t(ui.cv, locale)}
             </a>
             <a
-              href={`mailto:${profile.email}`}
+              href="#projects"
               className="rounded-lg border border-line px-5 py-2.5 font-semibold transition-colors hover:border-muted"
             >
-              {t(ui.heroCtaContact, locale)}
+              {t(ui.heroCtaProjects, locale)}
             </a>
           </div>
         </div>

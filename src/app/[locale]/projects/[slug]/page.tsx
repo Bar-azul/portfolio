@@ -6,6 +6,7 @@ import { getProject, projects } from "@/content/projects";
 import { kindLabel, locales, statusLabel, t, topicLabel, ui } from "@/lib/i18n";
 import { StatusDot } from "@/components/ProjectCard";
 import { Contact } from "@/components/Sections";
+import { FlowDiagram } from "@/components/FlowDiagram";
 
 type Params = { params: Promise<{ locale: string; slug: string }> };
 
@@ -27,8 +28,9 @@ export default async function ProjectPage({ params }: Params) {
   const locale = raw as Locale;
   const p = getProject(slug);
   if (!p) notFound();
-  const idx = projects.indexOf(p);
-  const next = projects[(idx + 1) % projects.length];
+  // "Next project" stays within the same track (AI projects or other builds)
+  const track = projects.filter((x) => (x.track ?? "ai") === (p.track ?? "ai"));
+  const next = track[(track.indexOf(p) + 1) % track.length];
 
   return (
     <main>
@@ -59,7 +61,13 @@ export default async function ProjectPage({ params }: Params) {
       </section>
 
       <div className="mx-auto grid max-w-6xl xl:max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[2fr_1fr]">
-        <article className="space-y-12">
+        <article className="min-w-0 space-y-12">
+          {p.flow?.length ? (
+            <div>
+              <h2 className="text-xl font-semibold">{t(ui.flowTitle, locale)}</h2>
+              <FlowDiagram steps={p.flow} locale={locale} />
+            </div>
+          ) : null}
           <div>
             <h2 className="text-xl font-semibold">{t(ui.problem, locale)}</h2>
             <p className="mt-3 max-w-[65ch] text-[17px] leading-relaxed text-ink/85">{t(p.problem, locale)}</p>

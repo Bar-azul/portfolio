@@ -32,4 +32,8 @@ export type Project = {
   links?: { label: L; href: string }[];
   /** Featured projects get a bigger cell in the grid */
   featured?: boolean;
+  /** "ai" (default) = main grid; "other" = short list under "Also built" */
+  track?: "ai" | "other";
+  /** Steps of the system, drawn as a flow diagram on the project page */
+  flow?: L[];
 };

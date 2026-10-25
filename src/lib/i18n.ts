@@ -8,6 +8,7 @@ export const t = (v: L, l: Locale) => v[l];
 export const ui = {
   nav: {
     projects: { he: "פרויקטים", en: "Projects" },
+    about: { he: "עליי", en: "About" },
     experience: { he: "ניסיון", en: "Experience" },
     stack: { he: "טכנולוגיות", en: "Stack" },
     contact: { he: "יצירת קשר", en: "Contact" },
@@ -15,14 +16,22 @@ export const ui = {
   switchLang: { he: "English", en: "עברית" },
   heroCtaProjects: { he: "לפרויקטים", en: "See projects" },
   heroCtaContact: { he: "שלחו לי מייל", en: "Email me" },
+  cv: { he: "הורדת קורות חיים", en: "Download CV" },
+  aboutTitle: { he: "עליי", en: "About" },
+  otherTitle: { he: "עוד דברים שבניתי והשקתי", en: "Other things I built and shipped" },
+  otherLead: {
+    he: "מוצרים קטנים שבניתי לבד מהרעיון ועד ההשקה, מחוץ לעבודה ב-AI.",
+    en: "Small products I built alone from idea to launch, outside my AI work.",
+  },
+  flowTitle: { he: "איך זה עובד", en: "How it works" },
   graphHint: {
     he: "כך נראית מערכת טיפוסית שאני בונה. לחצו על רכיב כדי לראות פרויקטים שמשתמשים בו.",
     en: "This is what a typical system I build looks like. Select a part to see the projects that use it.",
   },
-  projectsTitle: { he: "פרויקטים", en: "Projects" },
+  projectsTitle: { he: "פרויקטי AI", en: "AI projects" },
   projectsLead: {
-    he: "עבודה בפז, מוצרים שבניתי בעצמי ופרויקטים ללקוחות.",
-    en: "Work at Paz, products I built myself, and client projects.",
+    he: "מערכות שרצות בפרודקשן בפז, ופרויקטים עצמאיים.",
+    en: "Systems running in production at Paz, plus independent projects.",
   },
   all: { he: "הכול", en: "All" },
   allTopics: { he: "כל הנושאים", en: "All topics" },
@@ -38,12 +47,16 @@ export const ui = {
     he: "לחצו על טכנולוגיה כדי לראות איפה השתמשתי בה.",
     en: "Select a technology to see where I used it.",
   },
-  contactTitle: { he: "יש לכם פרויקט?", en: "Have a project in mind?" },
+  contactTitle: { he: "מגייסים מהנדס AI?", en: "Hiring an AI engineer?" },
   contactLead: {
-    he: "ספרו לי מה אתם רוצים לאוטמט או לבנות, ונבדוק יחד איך לעשות את זה.",
-    en: "Tell me what you want to automate or build, and we'll work out how to do it.",
+    he: "אשמח לשמוע על התפקיד והצוות. אפשר לפנות במייל, בלינקדאין או בוואטסאפ.",
+    en: "I'd be glad to hear about the role and the team. Reach me by email, LinkedIn or WhatsApp.",
   },
   whatsapp: { he: "וואטסאפ", en: "WhatsApp" },
+  freelance: {
+    he: "עובדים על פרויקט AI ומחפשים עזרה חיצונית? אני לוקח גם מספר מצומצם של פרויקטים כפרילנסר.",
+    en: "Working on an AI project and need outside help? I also take a small number of freelance projects.",
+  },
   back: { he: "חזרה לפרויקטים", en: "Back to projects" },
   problem: { he: "הבעיה", en: "The problem" },
   solution: { he: "מה בניתי", en: "What I built" },
@@ -55,7 +68,7 @@ export const ui = {
 
 export const kindLabel: Record<ProjectKind, L> = {
   paz: { he: "עבודה בפז", en: "At Paz" },
-  personal: { he: "מוצרים אישיים", en: "Personal products" },
+  personal: { he: "פרויקטים עצמאיים", en: "Independent" },
   client: { he: "לקוחות", en: "Client work" },
 };
 

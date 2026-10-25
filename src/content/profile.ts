@@ -2,16 +2,36 @@ import type { L } from "./types";
 
 export const profile = {
   name: { he: "בר אזולאי", en: "Bar Azulay" } as L,
-  role: { he: "מהנדס AI ואוטומציה", en: "AI & Automation Engineer" } as L,
+  role: { he: "מהנדס AI Full-Stack", en: "Full-Stack AI Engineer" } as L,
   intro: {
-    he: "אני בונה סוכני AI ומערכות אוטומציה שרצות בפרודקשן, מהאפיון והארכיטקטורה ועד הניטור אחרי ההשקה.",
-    en: "I build AI agents and automation systems that run in production, from spec and architecture to monitoring after launch.",
+    he: "אני בונה סוכני AI ומערכות LLM שרצות בפרודקשן בארגון גדול: מהדרישה העסקית והארכיטקטורה, דרך הפיתוח וההערכות, ועד הניטור אחרי ההשקה.",
+    en: "I build AI agents and LLM systems that run in production at a large enterprise: from business requirements and architecture, through development and evaluations, to monitoring after launch.",
   } as L,
   availability: {
-    he: "פתוח לפרויקטים, ייעוץ ותפקידים מעניינים",
-    en: "Open to projects, consulting and interesting roles",
+    he: "פתוח לתפקידי AI Engineer",
+    en: "Open to AI Engineer roles",
   } as L,
   location: { he: "ישראל", en: "Israel" } as L,
+
+  cv: "/Bar_Azulay_AI_Engineer_CV.pdf",
+  /** Put a square photo in /public and set its path here, e.g. "/bar.jpg" */
+  photo: "" as string,
+
+  about: {
+    he: [
+      "אני מהנדס AI בפז חברת נפט, ואחראי על פתרונות AI מקצה לקצה: אני מתרגם צורך עסקי לארכיטקטורה, בוחר את הטכנולוגיה, מפתח ומעלה לפרודקשן.",
+      "רוב העבודה שלי היא סוכנים עם כלים, חילוץ נתונים ממסמכים ו-RAG, על Azure, עם הערכות איכות, ניטור וטיפול בכשלים. כלומר מערכות שממשיכות לעבוד גם אחרי הדמו.",
+    ],
+    en: [
+      "I'm an AI engineer at Paz Oil Company, where I own AI solutions end to end: I turn a business need into an architecture, choose the stack, build it and ship it to production.",
+      "Most of my work is tool-using agents, document extraction and RAG on Azure, with evaluations, monitoring and failure handling. In other words, systems that keep working after the demo.",
+    ],
+  },
+  highlights: [
+    { value: "1.5+", label: { he: "שנים של AI בפרודקשן", en: "years of production AI" } as L },
+    { value: "10K", label: { he: "שיחות בחודש עוברות ניתוח AI", en: "calls a month through AI analysis" } as L },
+    { value: "200+", label: { he: "סניפים בצנרת נתונים אחת", en: "branches on one data pipeline" } as L },
+  ],
 
   // TODO: replace with your real profile URLs
   email: "bar3882@gmail.com",
@@ -61,7 +81,7 @@ export const profile = {
     },
     {
       group: { he: "פלטפורמות", en: "Platforms" } as L,
-      items: ["Wonderful", "Supabase", "WhatsApp Cloud API", "Android", "AdMob", "Vercel"],
+      items: ["Wonderful", "WhatsApp Cloud API", "Supabase", "Vercel"],
     },
     {
       group: { he: "DevOps", en: "DevOps" } as L,

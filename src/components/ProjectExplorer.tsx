@@ -3,13 +3,16 @@
 import clsx from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Locale, ProjectKind, Topic } from "@/content/types";
-import { projects } from "@/content/projects";
+import { aiProjects as projects } from "@/content/projects";
 import { kindLabel, t, topicLabel, ui } from "@/lib/i18n";
 import { useFilters } from "./FilterContext";
 import { ProjectCard } from "./ProjectCard";
 
-const KINDS: (ProjectKind | "all")[] = ["all", "paz", "personal", "client"];
-const TOPICS = Object.keys(topicLabel) as Topic[];
+// Only show tabs and topic chips that have at least one AI project behind them
+const KINDS = (["all", "paz", "personal", "client"] as (ProjectKind | "all")[]).filter(
+  (k) => k === "all" || projects.some((p) => p.kind === k),
+);
+const TOPICS = (Object.keys(topicLabel) as Topic[]).filter((x) => projects.some((p) => p.topics.includes(x)));
 
 export function ProjectExplorer({ locale }: { locale: Locale }) {
   const { kind, topics, tech, setKind, setTopics, setTech, clear } = useFilters();

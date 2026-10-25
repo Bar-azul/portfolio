@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import type { L, Locale, Topic } from "@/content/types";
-import { projects } from "@/content/projects";
+import type { L, Locale, ProjectKind, Topic } from "@/content/types";
+import { aiProjects as projects } from "@/content/projects";
 import { t } from "@/lib/i18n";
 import { useFilters } from "./FilterContext";
 
 type NodeId = "inputs" | "agent" | "workflows" | "interfaces" | "product";
 
-const NODES: { id: NodeId; title: L; sub: L; topics: Topic[]; state: "idle" | "running" | "live" }[] = [
+const NODES: { id: NodeId; title: L; sub: L; topics: Topic[]; kind?: ProjectKind; state: "idle" | "running" | "live" }[] = [
   {
     id: "inputs",
     title: { he: "קלט", en: "Inputs" },
@@ -41,7 +41,8 @@ const NODES: { id: NodeId; title: L; sub: L; topics: Topic[]; state: "idle" | "r
     id: "product",
     title: { he: "בפרודקשן", en: "In production" },
     sub: { he: "משתמשים אמיתיים", en: "Real users" },
-    topics: ["product"],
+    topics: [],
+    kind: "paz",
     state: "live",
   },
 ];
@@ -101,8 +102,8 @@ function edgePath(layout: Layout, pos: Record<NodeId, [number, number]>, a: Node
   return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
 }
 
-function countFor(topics: Topic[]) {
-  return projects.filter((p) => p.topics.some((x) => topics.includes(x))).length;
+function countFor(n: (typeof NODES)[number]) {
+  return projects.filter((p) => (n.kind ? p.kind === n.kind : p.topics.some((x) => n.topics.includes(x)))).length;
 }
 
 function Graph({ layout, locale, className }: { layout: Layout; locale: Locale; className: string }) {
@@ -144,7 +145,7 @@ function Graph({ layout, locale, className }: { layout: Layout; locale: Locale; 
       {NODES.map((n) => {
         const [x, y] = pos[n.id];
         const active = hover === n.id;
-        const count = countFor(n.topics);
+        const count = countFor(n);
         return (
           <foreignObject key={n.id} x={x} y={y} width={NW} height={NH} className="overflow-visible">
             <button
@@ -153,7 +154,7 @@ function Graph({ layout, locale, className }: { layout: Layout; locale: Locale; 
               onMouseLeave={() => setHover(null)}
               onFocus={() => setHover(n.id)}
               onBlur={() => setHover(null)}
-              onClick={() => jump({ topics: n.topics })}
+              onClick={() => jump(n.kind ? { kind: n.kind } : { topics: n.topics })}
               className="node-in flex h-full w-full flex-col justify-between rounded-xl border bg-surface px-3 py-2.5 text-start transition-colors duration-200"
               style={{
                 animationDelay: `${order[n.id] * 0.15}s`,

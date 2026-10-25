@@ -26,8 +26,8 @@ export function Header({ locale }: { locale: Locale }) {
           <a href={`${home}#projects`} className="rounded-md px-2.5 py-1.5 hover:text-ink">
             {t(ui.nav.projects, locale)}
           </a>
-          <a href={`${home}#experience`} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
-            {t(ui.nav.experience, locale)}
+          <a href={`${home}#about`} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
+            {t(ui.nav.about, locale)}
           </a>
           <a href={`${home}#stack`} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
             {t(ui.nav.stack, locale)}

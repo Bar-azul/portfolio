@@ -33,11 +33,17 @@ export const projects: Project[] = [
     ],
     topics: ["agents", "documents", "automation"],
     tech: ["Python", "Azure Functions", "Wonderful", "Azure Document Intelligence", "Blob Storage", "Service Bus"],
+    flow: [
+      { he: "מסמך דרישת תשלום", en: "Fee notice" },
+      { he: "חילוץ נתונים", en: "Document extraction" },
+      { he: "סוכן עם כלים: חיפוש שלטים והשוואת גיליונות", en: "Agent tools: sign search, sheet compare" },
+      { he: "אישור אנושי", en: "Human approval" },
+      { he: "עדכון תהליך העבודה", en: "Workflow update" },
+    ],
   },
   {
     slug: "call-analytics",
     kind: "paz",
-    featured: true,
     status: "production",
     year: "2025",
     title: { he: "אוטומציית הקלטות וניתוח שיחות", en: "Call Analytics & Recording Automation" },
@@ -60,6 +66,12 @@ export const projects: Project[] = [
     metric: { value: "10K", label: { he: "שיחות בחודש", en: "calls a month" } },
     topics: ["automation", "agents"],
     tech: ["Python", "Playwright", "Microsoft Graph", "Wonderful", "Azure"],
+    flow: [
+      { he: "התחברות לפורטל עם Playwright", en: "Portal sign-in with Playwright" },
+      { he: "קוד OTP מהמייל דרך Graph", en: "OTP from email via Graph" },
+      { he: "הורדת הקלטות", en: "Recording download" },
+      { he: "ניתוח ב-Wonderful Observer", en: "Wonderful Observer analysis" },
+    ],
   },
   {
     slug: "pazomat-chat-widget",
@@ -85,6 +97,12 @@ export const projects: Project[] = [
     ],
     topics: ["agents", "web"],
     tech: ["JavaScript", "WebSockets", "HTML/CSS", "Azure Storage", "Wonderful"],
+    flow: [
+      { he: "מבקר באתר", en: "Site visitor" },
+      { he: "וידג׳ט JS עם RTL", en: "JS widget with RTL" },
+      { he: "חיבור WebSocket", en: "WebSocket session" },
+      { he: "סוכן Wonderful", en: "Wonderful agent" },
+    ],
   },
   {
     slug: "survey-insights",
@@ -110,6 +128,13 @@ export const projects: Project[] = [
     ],
     topics: ["agents", "automation"],
     tech: ["Python", "LLM", "Structured Outputs", "Azure Functions", "Power Automate"],
+    flow: [
+      { he: "תשובות סקר", en: "Survey responses" },
+      { he: "ניתוח LLM עם פלט מובנה", en: "LLM analysis, structured output" },
+      { he: "הערכות איכות", en: "Evaluations" },
+      { he: "דוח לכל סניף", en: "Per-branch report" },
+      { he: "סיכום להנהלה", en: "Management summary" },
+    ],
   },
   {
     slug: "document-intelligence",
@@ -134,6 +159,13 @@ export const projects: Project[] = [
     ],
     topics: ["documents", "automation"],
     tech: ["Python", "Azure Document Intelligence", "OCR", "LLM", "Structured Outputs"],
+    flow: [
+      { he: "PDF או סריקה", en: "PDF or scan" },
+      { he: "OCR ו-Document Intelligence", en: "OCR and Document Intelligence" },
+      { he: "חילוץ מובנה עם LLM", en: "LLM structured extraction" },
+      { he: "ולידציה", en: "Validation" },
+      { he: "JSON / XML", en: "JSON / XML" },
+    ],
   },
   {
     slug: "wolt-catalog-ingestion",
@@ -160,13 +192,19 @@ export const projects: Project[] = [
     metric: { value: "200+", label: { he: "סניפים", en: "branches" } },
     topics: ["automation"],
     tech: ["Python", "Azure Functions", "Service Bus", "Application Insights", "REST APIs"],
+    flow: [
+      { he: "קטלוג ומבצעים", en: "Catalog and promotions" },
+      { he: "תור Service Bus לכל סניף", en: "Service Bus queue per branch" },
+      { he: "Azure Functions עם ניסיונות חוזרים", en: "Azure Functions with retries" },
+      { he: "Wolt API", en: "Wolt API" },
+      { he: "ניטור ב-App Insights", en: "App Insights monitoring" },
+    ],
   },
 
   // ───────────────────────── Personal products ─────────────────────────
   {
     slug: "scam-checker",
     kind: "personal",
-    featured: true,
     status: "prototype",
     year: "2026",
     title: { he: "עוקץ או לא", en: "Okets O Lo – Scam Checker" },
@@ -185,9 +223,16 @@ export const projects: Project[] = [
     results: [{ he: "אב-טיפוס עובד, בתכנון להשקה", en: "Working prototype, launch in planning" }],
     topics: ["agents", "web", "product"],
     tech: ["LLM API", "Web"],
+    flow: [
+      { he: "הדבקת הודעה", en: "Pasted message" },
+      { he: "בדיקת קישורים ודפוסים", en: "Link and pattern checks" },
+      { he: "סיווג עם LLM", en: "LLM classification" },
+      { he: "תשובה והסבר", en: "Verdict and explanation" },
+    ],
   },
   {
     slug: "seder-bakesef",
+    track: "other",
     kind: "personal",
     status: "live",
     year: "2026",
@@ -210,6 +255,7 @@ export const projects: Project[] = [
   },
   {
     slug: "quick-audio-cutter",
+    track: "other",
     kind: "personal",
     status: "live",
     year: "2026",
@@ -232,6 +278,7 @@ export const projects: Project[] = [
   },
   {
     slug: "pack-the-truck",
+    track: "other",
     kind: "personal",
     status: "building",
     year: "2026",
@@ -254,6 +301,7 @@ export const projects: Project[] = [
   },
   {
     slug: "pdfpro",
+    track: "other",
     kind: "personal",
     status: "live",
     year: "2025",
@@ -296,11 +344,19 @@ export const projects: Project[] = [
     results: [{ he: "בשלב תיקוף מול מרפאות שיניים באזור המרכז", en: "Validating with dental clinics in central Israel" }],
     topics: ["automation", "agents"],
     tech: ["n8n", "WhatsApp Cloud API", "LLM"],
+    flow: [
+      { he: "הודעת וואטסאפ ממטופל", en: "Patient WhatsApp message" },
+      { he: "Webhook של Cloud API", en: "Cloud API webhook" },
+      { he: "תהליך n8n עם LLM", en: "n8n flow with LLM" },
+      { he: "שאלות סינון", en: "Screening questions" },
+      { he: "ליד מסונן למרפאה", en: "Qualified lead to clinic" },
+    ],
   },
 
   // ───────────────────────── Client work ─────────────────────────
   {
     slug: "nail-studio-booking",
+    track: "other",
     kind: "client",
     status: "building",
     year: "2026",
@@ -324,3 +380,5 @@ export const projects: Project[] = [
 ];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
+export const aiProjects = projects.filter((p) => p.track !== "other");
+export const otherProjects = projects.filter((p) => p.track === "other");
