@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Locale } from "@/content/types";
 import { getProject, projects } from "@/content/projects";
-import { kindLabel, locales, statusLabel, t, topicLabel, ui } from "@/lib/i18n";
+import { kindLabel, locales, statusLabel, t, topicLabel, ui, localePath } from "@/lib/i18n";
 import { StatusDot } from "@/components/ProjectCard";
 import { Contact } from "@/components/Sections";
 import { FlowDiagram } from "@/components/FlowDiagram";
@@ -36,7 +36,7 @@ export default async function ProjectPage({ params }: Params) {
     <main>
       <section className="dot-grid border-b border-line/60">
         <div className="mx-auto max-w-6xl xl:max-w-7xl px-4 pb-14 pt-10 sm:px-6">
-          <Link href={`/${locale}#projects`} className="text-sm text-muted hover:text-ink">
+          <Link href={`${localePath(locale)}#projects`} className="text-sm text-muted hover:text-ink">
             {t(ui.back, locale)}
           </Link>
           <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted">
@@ -125,7 +125,7 @@ export default async function ProjectPage({ params }: Params) {
 
       <div className="mx-auto max-w-6xl xl:max-w-7xl px-4 pb-20 sm:px-6">
         <Link
-          href={`/${locale}/projects/${next.slug}`}
+          href={localePath(locale, `/projects/${next.slug}`)}
           className="block rounded-2xl border border-line p-6 transition-colors hover:border-muted"
         >
           <span className="text-sm text-muted">{t(ui.next, locale)}</span>

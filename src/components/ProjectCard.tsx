@@ -1,7 +1,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 import type { Locale, Project } from "@/content/types";
-import { kindLabel, statusLabel, t } from "@/lib/i18n";
+import { kindLabel, statusLabel, t, localePath } from "@/lib/i18n";
 
 export function StatusDot({ status }: { status: Project["status"] }) {
   const live = status === "production" || status === "live";
@@ -12,7 +12,7 @@ export function ProjectCard({ p, locale }: { p: Project; locale: Locale }) {
   const big = !!p.featured;
   return (
     <Link
-      href={`/${locale}/projects/${p.slug}`}
+      href={localePath(locale, `/projects/${p.slug}`)}
       className={clsx(
         "group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-muted/70 sm:p-6",
         big && "lg:min-h-[320px]",

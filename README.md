@@ -1,13 +1,14 @@
 # Bar Azulay – Portfolio
 
 Bilingual (Hebrew / English) portfolio built with Next.js 16, Tailwind CSS 4 and Motion.
-Every page is statically generated: `/he`, `/en`, and `/[locale]/projects/[slug]`.
+English is the default at the root (`/`, `/projects/<slug>`); Hebrew lives under `/he` (`/he`, `/he/projects/<slug>`).
+Pages are generated as `/en/...` and `/he/...`; `next.config.ts` rewrites the root URLs onto `/en` and redirects `/en/...` back to the root.
 
 ## Run locally
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000 → redirects to /he
+npm run dev      # http://localhost:3000 (English), /he for Hebrew
 npm run build    # production build
 ```
 
@@ -17,7 +18,7 @@ All projects live in **`src/content/projects.ts`**. Copy an existing object and 
 
 | Field | What it does |
 |---|---|
-| `slug` | URL of the project page (`/he/projects/<slug>`) |
+| `slug` | URL of the project page (`/projects/<slug>`, `/he/projects/<slug>`) |
 | `kind` | `"paz"`, `"personal"` or `"client"` – the main tabs |
 | `topics` | Any of `agents`, `automation`, `documents`, `web`, `mobile`, `product` – the chips and the hero diagram counts |
 | `tech` | Shown on the card; names that also appear in `profile.ts` skills become clickable in the Stack section |

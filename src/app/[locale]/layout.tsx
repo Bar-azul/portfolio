@@ -6,7 +6,7 @@ import "@fontsource/ibm-plex-sans-hebrew/600.css";
 import "@fontsource/ibm-plex-sans-hebrew/700.css";
 import "../globals.css";
 import { profile } from "@/content/profile";
-import { dir, isLocale, locales, t } from "@/lib/i18n";
+import { dir, isLocale, localePath, locales, t } from "@/lib/i18n";
 import { Header } from "@/components/Header";
 
 export const dynamicParams = false;
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: { default: title, template: `%s | ${t(profile.name, locale)}` },
     description: t(profile.intro, locale),
-    alternates: { languages: { he: "/he", en: "/en" } },
+    alternates: { canonical: localePath(locale), languages: { en: "/", he: "/he", "x-default": "/" } },
     openGraph: { title, description: t(profile.intro, locale), locale: locale === "he" ? "he_IL" : "en_US", type: "website" },
   };
 }

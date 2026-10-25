@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/content/types";
 import { profile } from "@/content/profile";
-import { t, ui } from "@/lib/i18n";
+import { t, ui, localePath, switchLocalePath } from "@/lib/i18n";
 
 export function Header({ locale }: { locale: Locale }) {
-  const pathname = usePathname() ?? `/${locale}`;
+  const pathname = usePathname() ?? localePath(locale);
   const other: Locale = locale === "he" ? "en" : "he";
-  const switched = pathname.replace(/^\/(he|en)/, `/${other}`);
-  const home = `/${locale}`;
+  const switched = switchLocalePath(pathname, other);
+  const home = localePath(locale);
+  const anchor = (id: string) => `${home === "/" ? "" : home}/#${id}`;
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/60 bg-canvas/80 backdrop-blur-md">
@@ -23,16 +24,16 @@ export function Header({ locale }: { locale: Locale }) {
         </Link>
 
         <nav aria-label="Main" className="flex items-center gap-1 text-sm text-muted">
-          <a href={`${home}#projects`} className="rounded-md px-2.5 py-1.5 hover:text-ink">
+          <a href={anchor("projects")} className="rounded-md px-2.5 py-1.5 hover:text-ink">
             {t(ui.nav.projects, locale)}
           </a>
-          <a href={`${home}#about`} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
+          <a href={anchor("about")} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
             {t(ui.nav.about, locale)}
           </a>
-          <a href={`${home}#stack`} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
+          <a href={anchor("stack")} className="hidden rounded-md px-2.5 py-1.5 hover:text-ink md:inline">
             {t(ui.nav.stack, locale)}
           </a>
-          <a href={`${home}#contact`} className="rounded-md px-2.5 py-1.5 hover:text-ink">
+          <a href={anchor("contact")} className="rounded-md px-2.5 py-1.5 hover:text-ink">
             {t(ui.nav.contact, locale)}
           </a>
           <Link

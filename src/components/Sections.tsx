@@ -1,6 +1,6 @@
 import type { Locale } from "@/content/types";
 import { profile } from "@/content/profile";
-import { t, ui } from "@/lib/i18n";
+import { t, ui, localePath } from "@/lib/i18n";
 import Link from "next/link";
 import { otherProjects } from "@/content/projects";
 import { statusLabel } from "@/lib/i18n";
@@ -159,7 +159,7 @@ export function OtherBuilds({ locale }: { locale: Locale }) {
           {otherProjects.map((p) => (
             <li key={p.slug}>
               <Link
-                href={`/${locale}/projects/${p.slug}`}
+                href={localePath(locale, `/projects/${p.slug}`)}
                 className="flex flex-col gap-1 py-4 transition-colors hover:bg-surface/60 sm:flex-row sm:items-baseline sm:gap-6 sm:px-2"
               >
                 <span className="font-semibold sm:w-56 sm:shrink-0">{t(p.title, locale)}</span>

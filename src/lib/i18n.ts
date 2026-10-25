@@ -5,6 +5,18 @@ export const isLocale = (v: string): v is Locale => (locales as string[]).includ
 export const dir = (l: Locale) => (l === "he" ? "rtl" : "ltr");
 export const t = (v: L, l: Locale) => v[l];
 
+/** English is the default and lives at the root; Hebrew lives under /he. */
+export const defaultLocale: Locale = "en";
+export const localePath = (l: Locale, path = "") => {
+  const clean = path.startsWith("/") ? path : path ? `/${path}` : "";
+  return l === defaultLocale ? clean || "/" : `/${l}${clean}`;
+};
+/** The same page in the other language, from the current URL path */
+export const switchLocalePath = (pathname: string, to: Locale) => {
+  const rest = pathname.replace(/^\/(he|en)(?=\/|$)/, "");
+  return localePath(to, rest);
+};
+
 export const ui = {
   nav: {
     projects: { he: "פרויקטים", en: "Projects" },
