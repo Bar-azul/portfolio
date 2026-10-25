@@ -74,6 +74,7 @@ export const kindLabel: Record<ProjectKind, L> = {
 
 export const topicLabel: Record<Topic, L> = {
   agents: { he: "סוכני AI", en: "AI agents" },
+  evals: { he: "Evals ובקרת איכות", en: "Evals & quality" },
   automation: { he: "אוטומציה", en: "Automation" },
   documents: { he: "עיבוד מסמכים", en: "Documents" },
   web: { he: "ווב", en: "Web" },

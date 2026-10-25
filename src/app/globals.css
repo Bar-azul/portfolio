@@ -66,7 +66,51 @@ body {
   50% { opacity: 0.35; }
 }
 
+/* Diagram nodes: fade in once, then light up each time the execution loop reaches them */
+.graph-node {
+  animation: node-in 0.45s ease-out both, exec 5s linear infinite;
+  transition: transform 0.15s ease, outline-color 0.15s ease;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.graph-node:hover,
+.graph-node:focus-visible {
+  outline-color: var(--color-signal);
+}
+@keyframes exec {
+  0% { border-color: var(--color-signal); box-shadow: 0 0 0 4px rgb(255 181 71 / 0.16), 0 0 28px rgb(255 181 71 / 0.22); }
+  16% { border-color: var(--color-signal); box-shadow: 0 0 0 4px rgb(255 181 71 / 0.10), 0 0 22px rgb(255 181 71 / 0.12); }
+  34%, 100% { border-color: var(--color-line); box-shadow: 0 0 0 0 transparent; }
+}
+.packet {
+  filter: drop-shadow(0 0 6px rgb(255 181 71 / 0.9));
+}
+
+/* Hero spotlight that follows the pointer across the dot grid */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 70%) var(--my, 30%), rgb(255 181 71 / 0.09), transparent 60%);
+  transition: background-position 0.2s;
+}
+
+/* Cards that come back into the grid after a filter change */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.card-in { animation: card-in 0.3s ease-out both; }
+
 @media (prefers-reduced-motion: reduce) {
+  .graph-node { animation: none; }
+  .card-in { animation: none; }
   html { scroll-behavior: auto; }
   .edge { animation: none; stroke-dashoffset: 0; }
   .node-in { animation: none; opacity: 1; }

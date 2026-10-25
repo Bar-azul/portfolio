@@ -31,7 +31,7 @@ export const projects: Project[] = [
       { he: "החלפת בדיקה ידנית בתהליך אוטומטי עם נקודת אישור אנושית", en: "Replaced a manual review with an automated flow that keeps a human approval step" },
       { he: "פרופיל ובדיקות רגרסיה לכל עירייה", en: "Per-municipality profiles with regression tests" },
     ],
-    topics: ["agents", "documents", "automation"],
+    topics: ["agents", "evals", "documents", "automation"],
     tech: ["Python", "Azure Functions", "Wonderful", "Azure Document Intelligence", "Blob Storage", "Service Bus"],
     flow: [
       { he: "מסמך דרישת תשלום", en: "Fee notice" },
@@ -126,7 +126,7 @@ export const projects: Project[] = [
       { he: "דוח תובנות ייעודי לכל סניף", en: "A dedicated insights report for every branch" },
       { he: "דיווח הנהלה אוטומטי במקום ריכוז ידני", en: "Automated management reporting instead of manual compilation" },
     ],
-    topics: ["agents", "automation"],
+    topics: ["agents", "evals", "automation"],
     tech: ["Python", "LLM", "Structured Outputs", "Azure Functions", "Power Automate"],
     flow: [
       { he: "תשובות סקר", en: "Survey responses" },

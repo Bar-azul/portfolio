@@ -5,7 +5,7 @@ export type L = { he: string; en: string };
 export type ProjectKind = "paz" | "personal" | "client";
 
 /** What the project is about. Drives the topic chips and the hero graph. */
-export type Topic = "agents" | "automation" | "documents" | "web" | "mobile" | "product";
+export type Topic = "agents" | "evals" | "automation" | "documents" | "web" | "mobile" | "product";
 
 export type Status = "production" | "live" | "building" | "prototype";
 

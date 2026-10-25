@@ -2,10 +2,12 @@ import type { Locale } from "@/content/types";
 import { profile } from "@/content/profile";
 import { t, ui } from "@/lib/i18n";
 import { AgentGraph } from "./AgentGraph";
+import { Spotlight } from "./Spotlight";
 
 export function Hero({ locale }: { locale: Locale }) {
   return (
     <section className="dot-grid border-b border-line/60">
+      <Spotlight>
       <div className="mx-auto grid max-w-6xl xl:max-w-7xl items-center gap-14 px-4 pb-14 pt-14 sm:px-6 sm:pt-20 xl:max-w-7xl xl:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] xl:gap-10 xl:pb-20">
         <div className="max-w-3xl">
           <p className="flex items-center gap-2 text-sm text-muted">
@@ -39,6 +41,7 @@ export function Hero({ locale }: { locale: Locale }) {
           <figcaption className="mt-5 text-sm text-muted">{t(ui.graphHint, locale)}</figcaption>
         </figure>
       </div>
+      </Spotlight>
     </section>
   );
 }
