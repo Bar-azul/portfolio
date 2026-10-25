@@ -42,6 +42,38 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "ev-charging-assistant",
+    kind: "paz",
+    status: "prototype",
+    year: "2026",
+    title: { he: "עוזר AI לעמדות טעינה", en: "EV Charging Stations AI Assistant" },
+    summary: {
+      he: "צ׳אט בעברית שמוצא עמדות טעינה לרכב חשמלי לפי שאלה חופשית, מיקום וסוג טעינה, על בסיס חיפוש סמנטי.",
+      en: "A Hebrew chat assistant that finds EV charging stations from a free-text question, location and charger type, using semantic search.",
+    },
+    problem: {
+      he: "נתוני עמדות הטעינה מפוזרים בין כמה מפעילים ומקורות, ולנהג אין דרך פשוטה לשאול ״איפה יש עמדה מהירה ליד חיפה?״ ולקבל תשובה אחת.",
+      en: "Charging-station data is scattered across several operators and sources, and drivers have no simple way to ask \"where's a fast charger near Haifa?\" and get one answer.",
+    },
+    solution: {
+      he: "בניתי מערכת סקרייפינג שאוספת נתוני עמדות מה-API של סלופארק וממפעילים נוספים ומאחדת אותם, ושומרת embeddings של Azure OpenAI ב-Chroma. הסוכן מזהה עיר, אזור או מחוז מתוך השאלה, מסנן לפי חברה וסוג זרם, מדרג מחדש את התוצאות ומחזיר תשובת LLM שמכירה את היסטוריית השיחה, לצד מפה אינטראקטיבית.",
+      en: "I built a scraping pipeline that collects station data from the Cellopark API and other operators into one dataset, stored as Azure OpenAI embeddings in Chroma. The agent detects the city, region or district in the question, filters by operator and current type, reranks the results and returns a history-aware LLM answer next to an interactive map.",
+    },
+    results: [
+      { he: "חיפוש בשפה חופשית בעברית על עמדות מכמה מפעילים", en: "Free-text Hebrew search across stations from several operators" },
+      { he: "תוצאות על מפה עם סינון לפי עיר, חברה וסוג טעינה", en: "Results on a map, filterable by city, operator and charger type" },
+    ],
+    topics: ["agents", "automation", "web"],
+    tech: ["Python", "Azure OpenAI", "RAG", "ChromaDB", "Streamlit", "Folium"],
+    flow: [
+      { he: "API של סלופארק ומפעילים נוספים", en: "Cellopark API and other operators" },
+      { he: "איחוד נתונים ו-embeddings", en: "Data merge and embeddings" },
+      { he: "חיפוש וקטורי ב-Chroma", en: "Vector search in Chroma" },
+      { he: "זיהוי מיקום, סינון ו-rerank", en: "Location intent, filters, rerank" },
+      { he: "תשובת LLM ומפה", en: "LLM answer and map" },
+    ],
+  },
+  {
     slug: "call-analytics",
     kind: "paz",
     status: "production",
@@ -231,6 +263,74 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "apartment-finder",
+    kind: "personal",
+    status: "prototype",
+    year: "2026",
+    title: { he: "חיפוש דירות בשפה חופשית", en: "Natural-Language Apartment Search" },
+    summary: {
+      he: "כותבים בעברית מה מחפשים, LLM הופך את זה לפילטרים, מחפש ביד2 ומאמת כל מודעה בדפדפן אוטומטי.",
+      en: "Describe the apartment in Hebrew; an LLM turns it into filters, searches Yad2 and verifies each listing in an automated browser.",
+    },
+    problem: {
+      he: "חיפוש דירה ביד2 דורש למלא עשרות פילטרים, ופרטים חשובים כמו ממ״ד, חניה או חיות מחמד מופיעים לעיתים רק בתוך המודעה עצמה.",
+      en: "Searching Yad2 means filling in dozens of filters, and key details like a safe room, parking or pets are often only inside the listing itself.",
+    },
+    solution: {
+      he: "Backend ב-FastAPI שבו Gemini ממיר את הבקשה ל-JSON מובנה: ערים, טווח מחיר וחדרים, דרישות חובה ודברים להחריג. השרת מתרגם ערים למזהי מיקום ומחפש, ואז Playwright נכנס למודעות כדי לאמת ולהעשיר את התכונות, עם תור אימות וטיפול ב-captcha. Frontend ב-React מציג תגיות תכונות והתקדמות חיפוש בזמן אמת.",
+      en: "A FastAPI backend where Gemini turns the request into structured JSON: cities, price and room ranges, must-haves and exclusions. The server resolves cities to location IDs and searches, then Playwright opens listings to verify and enrich their features, with a verification queue and captcha handling. A React frontend shows feature badges and live search progress.",
+    },
+    results: [
+      { he: "חיפוש אחד בשפה חופשית במקום מילוי פילטרים", en: "One free-text search instead of a form full of filters" },
+      { he: "תכונות שמאומתות מתוך גוף המודעה", en: "Features verified from the listing itself" },
+    ],
+    links: [{ label: { he: "לקוד ב-GitHub", en: "Code on GitHub" }, href: "https://github.com/Bar-azul/ApartmentFinder" }],
+    topics: ["agents", "web"],
+    tech: ["Python", "FastAPI", "Gemini", "Structured Outputs", "Playwright", "React"],
+    flow: [
+      { he: "בקשה בעברית", en: "Hebrew request" },
+      { he: "Gemini: פילטרים ב-JSON", en: "Gemini: filters as JSON" },
+      { he: "חיפוש ביד2", en: "Yad2 search" },
+      { he: "Playwright: אימות והעשרה", en: "Playwright: verify and enrich" },
+      { he: "תוצאות עם תגיות", en: "Results with badges" },
+    ],
+  },
+  {
+    slug: "pdfpro",
+    kind: "personal",
+    status: "live",
+    year: "2025–2026",
+    title: { he: "PDF Pro", en: "PDF Pro" },
+    summary: {
+      he: "כלי PDF אונליין עם המרות, OCR, תרגום ותמלול AI, כולל תמיכה מלאה בעברית.",
+      en: "Online PDF tools with conversion, OCR, translation and AI transcription, with full Hebrew support.",
+    },
+    problem: {
+      he: "כלי PDF מקבלים המון תנועה אורגנית, אבל רובם לא מתמודדים טוב עם עברית ו-RTL, וכדי לזכות בתנועה צריך אתר מהיר ותקין טכנית.",
+      en: "PDF tools get huge organic traffic, but most handle Hebrew and RTL poorly, and winning that traffic takes a fast, technically clean site.",
+    },
+    solution: {
+      he: "Backend ב-FastAPI עם PostgreSQL: המרה ועריכה של PDF, OCR עם Tesseract, תמלול עם Whisper על Cloudflare Workers AI, ותרגום עם שרשרת ספקים לגיבוי (Azure AI Translator ואז Google). כולל משתמשים, תשלומים, rate limiting ויצירת Word מימין לשמאל. ה-Frontend סטטי ומהיר, עם בלוג ועבודת SEO ו-AdSense.",
+      en: "A FastAPI backend with PostgreSQL: PDF conversion and editing, Tesseract OCR, Whisper transcription on Cloudflare Workers AI, and translation through a provider fallback chain (Azure AI Translator, then Google). It includes accounts, payments, rate limiting and right-to-left Word output. The frontend is a fast static site with a blog, SEO work and AdSense.",
+    },
+    results: [
+      { he: "האתר באוויר ומאונדקס", en: "Live and indexed" },
+      { he: "תרגום ותמלול שממשיכים לעבוד גם כשספק אחד לא זמין", en: "Translation and transcription keep working when one provider is unavailable" },
+    ],
+    links: [
+      { label: { he: "לאתר", en: "Visit site" }, href: "https://pdfproapp.com" },
+      { label: { he: "קוד ה-Backend", en: "Backend code" }, href: "https://github.com/Bar-azul/PdfPro" },
+    ],
+    topics: ["documents", "web", "product"],
+    tech: ["Python", "FastAPI", "PostgreSQL", "Whisper", "Cloudflare Workers AI", "Azure AI Translator", "OCR"],
+    flow: [
+      { he: "העלאת קובץ", en: "File upload" },
+      { he: "FastAPI", en: "FastAPI" },
+      { he: "OCR, Whisper, תרגום או המרה", en: "OCR, Whisper, translation or conversion" },
+      { he: "קובץ מוכן להורדה", en: "File ready to download" },
+    ],
+  },
+  {
     slug: "seder-bakesef",
     track: "other",
     kind: "personal",
@@ -298,30 +398,6 @@ export const projects: Project[] = [
     results: [{ he: "גרסה ניתנת למשחק, בדרך לחנות", en: "Playable build, heading to the store" }],
     topics: ["mobile", "product"],
     tech: ["HTML5 Canvas", "JavaScript", "Android", "AdMob"],
-  },
-  {
-    slug: "pdfpro",
-    track: "other",
-    kind: "personal",
-    status: "live",
-    year: "2025",
-    title: { he: "PDF Pro", en: "PDF Pro" },
-    summary: {
-      he: "אתר להמרת קבצי PDF, עם עבודת SEO ומונטיזציה דרך AdSense.",
-      en: "A PDF conversion website, with SEO work and AdSense monetization.",
-    },
-    problem: {
-      he: "כלי המרת PDF הם שוק עם הרבה תנועה אורגנית, אבל כדי לקבל אותה צריך אתר מהיר ותקין טכנית.",
-      en: "PDF tools get huge organic search traffic, but winning it takes a fast, technically clean site.",
-    },
-    solution: {
-      he: "בניתי אתר רספונסיבי שרץ על Vercel, תיקנתי canonical URLs, הרחבתי את ה-sitemap והגדרתי AdSense.",
-      en: "I built a responsive site on Vercel, fixed canonical URLs, expanded the sitemap and set up AdSense.",
-    },
-    results: [{ he: "האתר באוויר ומאונדקס", en: "Live and indexed" }],
-    links: [{ label: { he: "לאתר", en: "Visit site" }, href: "https://pdfproapp.com" }],
-    topics: ["web", "product"],
-    tech: ["Vercel", "SEO", "AdSense"],
   },
   {
     slug: "clinic-whatsapp-automation",

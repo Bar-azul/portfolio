@@ -33,10 +33,10 @@ export const profile = {
     { value: "200+", label: { he: "סניפים בצנרת נתונים אחת", en: "branches on one data pipeline" } as L },
   ],
 
-  // TODO: replace with your real profile URLs
+  // TODO: replace linkedin with your real profile URL
   email: "bar3882@gmail.com",
   phone: "+972549466126",
-  github: "https://github.com/",
+  github: "https://github.com/Bar-azul",
   linkedin: "https://www.linkedin.com/",
 
   experience: [
@@ -69,11 +69,11 @@ export const profile = {
   skills: [
     {
       group: { he: "AI ו-LLM", en: "AI & LLM" } as L,
-      items: ["AI Agents", "RAG", "Semantic Search", "LLM Evaluation", "Structured Outputs", "Prompt Engineering", "Azure Document Intelligence", "OCR", "LangChain", "LangGraph", "LangSmith", "MCP"],
+      items: ["AI Agents", "RAG", "Semantic Search", "LLM Evaluation", "Structured Outputs", "Prompt Engineering", "Azure OpenAI", "Gemini", "ChromaDB", "Whisper", "Azure Document Intelligence", "OCR", "LangChain", "LangGraph", "LangSmith", "MCP"],
     },
     {
       group: { he: "Backend ו-Web", en: "Backend & Web" } as L,
-      items: ["Python", "FastAPI", "REST APIs", "JavaScript", "React", "Next.js", "Node.js", "WebSockets", "SQL", "gRPC"],
+      items: ["Python", "FastAPI", "REST APIs", "JavaScript", "React", "Next.js", "Node.js", "WebSockets", "SQL", "PostgreSQL", "Streamlit", "gRPC"],
     },
     {
       group: { he: "ענן ואוטומציה", en: "Cloud & Automation" } as L,
