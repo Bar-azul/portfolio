@@ -100,3 +100,41 @@ export const statusLabel: Record<Status, L> = {
   building: { he: "בפיתוח", en: "In development" },
   prototype: { he: "אב-טיפוס", en: "Prototype" },
 };
+
+export const chatUi = {
+  launch: { he: "שאלו את ה-AI שלי", en: "Ask my AI" },
+  title: { he: "עוזר ה-AI של בר", en: "Bar's AI assistant" },
+  subtitle: { he: "עונה מתוך הפרויקטים וקורות החיים שלי", en: "Answers from my projects and CV" },
+  intro: {
+    he: "שלום! אני יכול לספר על הניסיון של בר, הפרויקטים שבנה והטכנולוגיות שהוא עובד איתן. במה להתחיל?",
+    en: "Hi! I can tell you about Bar's experience, the projects he built and the tech he works with. Where should we start?",
+  },
+  suggestions: {
+    he: ["מה בר בנה עם סוכני AI?", "תסכם את בר למנהל גיוס", "מה הניסיון שלו עם Azure?", "האם בר פתוח לתפקיד חדש?"],
+    en: ["What has Bar built with AI agents?", "Summarize Bar for a hiring manager", "What's his Azure experience?", "Is Bar open to a new role?"],
+  },
+  placeholder: { he: "שאלו על הניסיון או הפרויקטים…", en: "Ask about experience, projects or stack…" },
+  send: { he: "שליחה", en: "Send" },
+  close: { he: "סגירה", en: "Close" },
+  reset: { he: "שיחה חדשה", en: "New chat" },
+  thinking: { he: "חושב…", en: "Thinking…" },
+  disclaimer: {
+    he: "תשובות AI עלולות לטעות. לדברים חשובים כתבו לי במייל.",
+    en: "AI answers can be wrong. For anything important, email me.",
+  },
+  tooLong: { he: "השאלה ארוכה מדי. נסו לקצר.", en: "That question is too long. Try a shorter one." },
+  errors: {
+    rate_limited: {
+      he: "נשאלו הרבה שאלות בזמן קצר. נסו שוב בעוד כמה דקות, או כתבו לי במייל.",
+      en: "Lots of questions in a short time. Try again in a few minutes, or email me.",
+    },
+    not_configured: {
+      he: "העוזר עוד לא מחובר. בינתיים אפשר לכתוב לי במייל.",
+      en: "The assistant isn't connected yet. You can email me in the meantime.",
+    },
+    generic: {
+      he: "לא הצלחתי לענות הפעם. נסו שוב, או כתבו לי במייל.",
+      en: "I couldn't answer this time. Try again, or email me.",
+    },
+  },
+} as const;

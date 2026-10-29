@@ -8,6 +8,8 @@ import "../globals.css";
 import { profile } from "@/content/profile";
 import { dir, isLocale, localePath, locales, t } from "@/lib/i18n";
 import { Header } from "@/components/Header";
+import { ChatWidget } from "@/components/ChatWidget";
+import { projects } from "@/content/projects";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -40,6 +42,7 @@ export default async function LocaleLayout({
       <body className="min-h-dvh">
         <Header locale={locale} />
         {children}
+        <ChatWidget locale={locale} titles={Object.fromEntries(projects.map((p) => [p.slug, t(p.title, locale)]))} />
       </body>
     </html>
   );

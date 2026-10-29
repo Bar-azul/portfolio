@@ -1,6 +1,7 @@
 import type { Locale } from "@/content/types";
 import { profile } from "@/content/profile";
-import { t, ui } from "@/lib/i18n";
+import { chatUi, t, ui } from "@/lib/i18n";
+import { OpenChatButton } from "./ChatWidget";
 import { AgentGraph } from "./AgentGraph";
 import { Spotlight } from "./Spotlight";
 
@@ -33,6 +34,10 @@ export function Hero({ locale }: { locale: Locale }) {
             >
               {t(ui.heroCtaProjects, locale)}
             </a>
+            <OpenChatButton className="flex items-center gap-2 rounded-lg border border-signal/50 bg-signal/10 px-5 py-2.5 font-semibold text-signal transition-colors hover:border-signal">
+              <span aria-hidden className="size-1.5 rounded-full bg-signal running" />
+              {t(chatUi.launch, locale)}
+            </OpenChatButton>
           </div>
         </div>
 

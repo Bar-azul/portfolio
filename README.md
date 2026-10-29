@@ -29,6 +29,20 @@ All projects live in **`src/content/projects.ts`**. Copy an existing object and 
 
 Every text field takes `{ he: "...", en: "..." }`. Order in the array = order on the site.
 
+## AI chat
+
+The floating "Ask my AI" assistant answers visitors' questions using only the site's own content
+(`src/content/profile.ts` and `projects.ts`), and links the projects it mentions.
+
+- **Setup:** add `GEMINI_API_KEY` in Vercel → Project → Settings → Environment Variables, then redeploy.
+  Without a key, the chat says it isn't connected yet (in `npm run dev` it returns a local test reply).
+- **Where things live:** `src/app/api/chat/route.ts` (validation, rate limits), `src/lib/chat/prompt.ts`
+  (assistant rules), `src/lib/chat/knowledge.ts` (what it knows), `src/lib/chat/gemini.ts` (model call;
+  swap this file to use another provider), `src/components/ChatWidget.tsx` (UI).
+- **Limits:** 600 characters per question, 20 questions per visitor per 10 minutes, and a daily cap
+  (`CHAT_DAILY_LIMIT`). These live in memory, so also set a budget or quota on the API key itself.
+- Adding a project updates what the assistant knows automatically.
+
 ## Edit personal details
 
 `src/content/profile.ts` – name, intro, contact links, experience timeline and skills.
