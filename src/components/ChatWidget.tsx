@@ -10,7 +10,8 @@ type Msg = { role: "user" | "assistant"; content: string; error?: boolean };
 
 export const OPEN_CHAT_EVENT = "portfolio:open-chat";
 const MAX_CHARS = 600;
-const CITE = /\[\[([a-z0-9-]+)\]\]/g;
+// [[slug]] tags; tolerate a model putting several slugs in one tag: [[a, b]]
+const CITE = /\[\[\s*([a-z0-9-]+(?:\s*[,;]\s*[a-z0-9-]+)*)\s*\]\]/g;
 
 /** Turns assistant text into paragraphs, "- " bullets and project citation chips. */
 function Answer({ text, locale, titles }: { text: string; locale: Locale; titles: Record<string, string> }) {
@@ -18,17 +19,17 @@ function Answer({ text, locale, titles }: { text: string; locale: Locale; titles
     const parts = s.split(CITE);
     return parts.map((part, i) => {
       if (i % 2 === 0) return <Fragment key={`${key}-${i}`}>{part}</Fragment>;
-      const title = titles[part];
-      if (!title) return null; // unknown tag: drop it rather than show a broken link
-      return (
+      // unknown slugs are dropped rather than shown as broken links
+      const slugs = [...new Set(part.split(/\s*[,;]\s*/))].filter((x) => titles[x]);
+      return slugs.map((slug) => (
         <Link
-          key={`${key}-${i}`}
-          href={localePath(locale, `/projects/${part}`)}
+          key={`${key}-${i}-${slug}`}
+          href={localePath(locale, `/projects/${slug}`)}
           className="mx-0.5 inline-flex items-center rounded-md border border-signal/40 bg-signal/10 px-1.5 py-px align-baseline text-[12px] font-medium text-signal hover:border-signal"
         >
-          {title}
+          {titles[slug]}
         </Link>
-      );
+      ));
     });
   };
 
@@ -235,7 +236,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
             </button>
           </header>
 
-          <div ref={scroller} className="dot-grid min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4 text-[14.5px] leading-relaxed" aria-live="polite">
+          <div ref={scroller} className="chat-scroll dot-grid min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4 text-[14.5px] leading-relaxed" aria-live="polite">
             <div className="max-w-[90%] rounded-2xl rounded-ss-sm border border-line bg-surface px-3.5 py-2.5">{t(chatUi.intro, locale)}</div>
 
             {messages.length === 0 && (

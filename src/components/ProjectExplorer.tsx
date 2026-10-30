@@ -31,7 +31,7 @@ export function ProjectExplorer({ locale }: { locale: Locale }) {
       <p className="mt-2 text-muted">{t(ui.projectsLead, locale)}</p>
 
       {/* Where: tabs */}
-      <div role="tablist" className="mt-8 flex gap-1 overflow-x-auto border-b border-line">
+      <div role="tablist" className="mt-8 flex flex-wrap gap-x-1 border-b border-line">
         {KINDS.map((k) => {
           const on = kind === k;
           return (
