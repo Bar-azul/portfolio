@@ -104,6 +104,13 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
 
       const ctrl = new AbortController();
       abortRef.current = ctrl;
+      let timedOut = false;
+      // If nothing arrives for 45s, stop and say so rather than leaving the dots running
+      let watchdog = setTimeout(() => ((timedOut = true), ctrl.abort()), 45_000);
+      const bump = () => {
+        clearTimeout(watchdog);
+        watchdog = setTimeout(() => ((timedOut = true), ctrl.abort()), 20_000);
+      };
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -123,6 +130,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
         for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
+          bump();
           const chunk = decoder.decode(value, { stream: true });
           setMessages((m) => {
             const copy = m.slice();
@@ -136,10 +144,19 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
           return last.content.trim() ? m : [...m.slice(0, -1), { role: "assistant", content: t(chatUi.errors.generic, locale), error: true }];
         });
       } catch (err) {
-        if ((err as Error).name !== "AbortError") {
+        if (timedOut) {
+          setMessages((m) => {
+            const last = m[m.length - 1];
+            const base = last?.role === "assistant" && !last.content.trim() ? m.slice(0, -1) : m;
+            return last?.role === "assistant" && last.content.trim()
+              ? m
+              : [...base, { role: "assistant", content: t(chatUi.errors.busy, locale), error: true }];
+          });
+        } else if ((err as Error).name !== "AbortError") {
           setMessages((m) => [...m, { role: "assistant", content: t(chatUi.errors.generic, locale), error: true }]);
         }
       } finally {
+        clearTimeout(watchdog);
         setBusy(false);
         abortRef.current = null;
       }

@@ -69,6 +69,8 @@ export async function streamLLM(opts: {
   messages: ChatMessage[];
   signal?: AbortSignal;
   maxTokens?: number;
+  /** Called with the model that ended up answering */
+  onModel?: (model: string) => void;
 }): Promise<ReadableStream<Uint8Array>> {
   const provider = detectProvider(opts.key);
   const model = modelFor(provider);
@@ -76,23 +78,43 @@ export async function streamLLM(opts: {
   const maxTokens = opts.maxTokens ?? 1500;
 
   if (provider === "gemini") {
-    // Try the chosen model, then Google's "latest" aliases. Retire (404) or overload (429/500/503)
-    // on one model moves on to the next; a short retry first smooths over brief load spikes.
+    // Try the chosen model, then Google's "latest" aliases. A model that is retired (404),
+    // overloaded (429/5xx) or too slow to start answering is skipped for the next one.
+    // The whole search is capped so a visitor never waits more than ~35s.
     const candidates = [...new Set([model, "gemini-flash-latest", "gemini-flash-lite-latest"])];
+    const deadline = Date.now() + 35_000;
     let lastErr: unknown;
     for (const m of candidates) {
+      let lowThinking = true;
       for (let attempt = 0; attempt < 2; attempt++) {
+        const left = deadline - Date.now();
+        if (left < 3_000) throw lastErr ?? new Error("gemini timeout: out of time");
         try {
-          return await streamGemini({ apiKey: opts.key, model: m, system: opts.system, messages: opts.messages, signal: opts.signal, maxTokens });
+          const stream = await streamGemini({
+            apiKey: opts.key,
+            model: m,
+            system: opts.system,
+            messages: opts.messages,
+            signal: opts.signal,
+            maxTokens,
+            lowThinking,
+            firstTextTimeoutMs: Math.min(9_000, left),
+          });
+          opts.onModel?.(m);
+          return stream;
         } catch (err) {
           lastErr = err;
-          const msg = String((err as Error).message);
           if (opts.signal?.aborted) throw err;
-          const overloaded = /^gemini (429|500|503)/.test(msg);
+          const msg = String((err as Error).message);
+          // Some models reject the "minimal thinking" setting; retry the same model without it
+          if (/^gemini 400/.test(msg) && /thinking/i.test(msg) && lowThinking) {
+            lowThinking = false;
+            continue;
+          }
+          const retryable = /^gemini (429|500|503|timeout|empty)/.test(msg);
           const gone = /^gemini 404/.test(msg);
-          if (!overloaded && !gone) throw err; // bad key, bad request: no point retrying
-          if (gone || attempt === 1) break; // next model
-          await new Promise((r) => setTimeout(r, 700));
+          if (!retryable && !gone) throw err; // bad key, bad request: no point trying others
+          break; // next model
         }
       }
     }

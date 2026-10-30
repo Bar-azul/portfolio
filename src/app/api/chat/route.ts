@@ -5,6 +5,7 @@ import { detectProvider, modelFor, readKey, streamLLM } from "@/lib/chat/provide
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // seconds; model fallbacks are capped well below this
 
 const MAX_MESSAGE_CHARS = 600;
 const MAX_TURNS = 10; // only the latest messages are sent to the model
@@ -89,16 +90,18 @@ export async function POST(req: Request) {
   }
 
   try {
+    let usedModel = "";
     const stream = await streamLLM({
       key: apiKey,
+      onModel: (m) => (usedModel = m),
       system: systemPrompt(parsed.locale),
       messages: parsed.messages,
       signal: req.signal,
     });
-    return new Response(stream, { headers });
+    return new Response(stream, { headers: { ...headers, "x-chat-model": usedModel } });
   } catch (err) {
     console.error("[chat]", err);
-    const busy = /^\w+ (429|500|503|529)/.test(String((err as Error).message));
+    const busy = /^\w+ (429|500|503|529|timeout|empty)/.test(String((err as Error).message));
     return json(busy ? 503 : 502, busy ? "busy" : "upstream_error");
   }
 }
@@ -118,13 +121,24 @@ export async function GET(req: Request) {
 
   const provider = detectProvider(key);
   const info = { provider, model: modelFor(provider), keyStartsWith: key.slice(0, 4) + "…", keyLength: key.length };
+  const t0 = Date.now();
+  let answeredBy = "";
   try {
-    const stream = await streamLLM({ key, system: "Reply with the single word: ok", messages: [{ role: "user", content: "ping" }], maxTokens: 300 });
+    const stream = await streamLLM({
+      key,
+      system: "Reply with the single word: ok",
+      messages: [{ role: "user", content: "ping" }],
+      maxTokens: 300,
+      onModel: (m) => (answeredBy = m),
+    });
     const text = (await new Response(stream).text()).trim();
-    return new Response(JSON.stringify({ ok: !!text, ...info, reply: text.slice(0, 40) }, null, 2), { headers });
+    return new Response(
+      JSON.stringify({ ok: !!text, ...info, answeredBy, seconds: (Date.now() - t0) / 1000, reply: text.slice(0, 40) }, null, 2),
+      { headers },
+    );
   } catch (err) {
     // Provider error messages don't include the key; strip anything key-like just in case
     const msg = String((err as Error).message).replaceAll(key, "[key]");
-    return new Response(JSON.stringify({ ok: false, ...info, error: msg }, null, 2), { headers });
+    return new Response(JSON.stringify({ ok: false, ...info, seconds: (Date.now() - t0) / 1000, error: msg }, null, 2), { headers });
   }
 }
