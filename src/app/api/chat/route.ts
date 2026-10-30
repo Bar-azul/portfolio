@@ -79,7 +79,8 @@ export async function POST(req: Request) {
     "x-content-type-options": "nosniff",
   };
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  // Vercel env var name chosen in the dashboard; GEMINI_API_KEY also works
+  const apiKey = process.env.LLM_CV_API_Key || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     if (process.env.NODE_ENV !== "production" || process.env.CHAT_MOCK === "1") {
       return new Response(mockStream(parsed.locale), { headers });

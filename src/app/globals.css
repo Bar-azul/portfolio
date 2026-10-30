@@ -117,7 +117,7 @@ body {
 }
 @media (min-width: 640px) {
   .chat-panel {
-    inset-inline: auto calc(1.25rem + env(safe-area-inset-right, 0px));
+    inset-inline: calc(1.25rem + max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))) auto;
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     width: 400px;
   }

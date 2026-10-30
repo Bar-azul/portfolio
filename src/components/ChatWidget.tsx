@@ -167,7 +167,8 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
           className="chat-launcher fixed z-50 flex items-center gap-2 rounded-full bg-signal py-3 pe-5 ps-4 font-semibold text-canvas shadow-[0_8px_30px_rgb(0_0_0/0.45)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
           style={{
             bottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
-            insetInlineEnd: "calc(1rem + env(safe-area-inset-right, 0px))",
+            // start side: left in English, right in Hebrew
+            insetInlineStart: "calc(1rem + max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)))",
           }}
           aria-haspopup="dialog"
         >
