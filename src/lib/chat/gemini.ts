@@ -12,6 +12,7 @@ export async function streamGemini(opts: {
   system: string;
   messages: ChatMessage[];
   signal?: AbortSignal;
+  maxTokens?: number;
 }): Promise<ReadableStream<Uint8Array>> {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(opts.model)}:streamGenerateContent?alt=sse`;
   const res = await fetch(url, {
@@ -26,16 +27,16 @@ export async function streamGemini(opts: {
       })),
       generationConfig: {
         temperature: 0.3,
-        maxOutputTokens: 600,
-        // Answers come from the profile, so skip "thinking" tokens: faster and cheaper
-        thinkingConfig: { thinkingBudget: 0 },
+        maxOutputTokens: opts.maxTokens ?? 600,
+        // Answers come from the profile, so skip "thinking" tokens on Flash models: faster and cheaper
+        ...(/flash/.test(opts.model) && /2\.5/.test(opts.model) ? { thinkingConfig: { thinkingBudget: 0 } } : {}),
       },
     }),
   });
 
   if (!res.ok || !res.body) {
     const detail = await res.text().catch(() => "");
-    throw new Error(`Gemini ${res.status}: ${detail.slice(0, 300)}`);
+    throw new Error(`gemini ${res.status}: ${detail.slice(0, 400)}`);
   }
 
   const reader = res.body.getReader();

@@ -1,6 +1,7 @@
 import type { Locale } from "@/content/types";
 import { systemPrompt } from "@/lib/chat/prompt";
-import { mockStream, streamGemini, type ChatMessage } from "@/lib/chat/gemini";
+import { mockStream, type ChatMessage } from "@/lib/chat/gemini";
+import { detectProvider, modelFor, readKey, streamLLM } from "@/lib/chat/providers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,8 +80,7 @@ export async function POST(req: Request) {
     "x-content-type-options": "nosniff",
   };
 
-  // Vercel env var name chosen in the dashboard; GEMINI_API_KEY also works
-  const apiKey = process.env.LLM_CV_API_Key || process.env.GEMINI_API_KEY;
+  const apiKey = readKey();
   if (!apiKey) {
     if (process.env.NODE_ENV !== "production" || process.env.CHAT_MOCK === "1") {
       return new Response(mockStream(parsed.locale), { headers });
@@ -89,9 +89,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    const stream = await streamGemini({
-      apiKey,
-      model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
+    const stream = await streamLLM({
+      key: apiKey,
       system: systemPrompt(parsed.locale),
       messages: parsed.messages,
       signal: req.signal,
@@ -100,5 +99,31 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("[chat]", err);
     return json(502, "upstream_error");
+  }
+}
+
+/**
+ * Setup check: open /api/chat in a browser.
+ * Shows which provider the key points to and whether a one-word test call works.
+ * Never returns the key itself.
+ */
+export async function GET(req: Request) {
+  const key = readKey();
+  const headers = { "content-type": "application/json", "cache-control": "no-store" };
+  if (!key) return new Response(JSON.stringify({ ok: false, problem: "No API key found in LLM_CV_API_Key. Add it in Vercel and redeploy." }, null, 2), { headers });
+
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
+  if (rateLimited(ip)) return json(429, "rate_limited");
+
+  const provider = detectProvider(key);
+  const info = { provider, model: modelFor(provider), keyStartsWith: key.slice(0, 4) + "…", keyLength: key.length };
+  try {
+    const stream = await streamLLM({ key, system: "Reply with the single word: ok", messages: [{ role: "user", content: "ping" }], maxTokens: 20 });
+    const text = (await new Response(stream).text()).trim();
+    return new Response(JSON.stringify({ ok: !!text, ...info, reply: text.slice(0, 40) }, null, 2), { headers });
+  } catch (err) {
+    // Provider error messages don't include the key; strip anything key-like just in case
+    const msg = String((err as Error).message).replaceAll(key, "[key]");
+    return new Response(JSON.stringify({ ok: false, ...info, error: msg }, null, 2), { headers });
   }
 }

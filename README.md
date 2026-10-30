@@ -41,6 +41,9 @@ The floating "Ask my AI" assistant answers visitors' questions using only the si
   swap this file to use another provider), `src/components/ChatWidget.tsx` (UI).
 - **Limits:** 600 characters per question, 20 questions per visitor per 10 minutes, and a daily cap
   (`CHAT_DAILY_LIMIT`). These live in memory, so also set a budget or quota on the API key itself.
+- **Providers:** the key prefix picks the provider: Gemini (`AIza…`), OpenAI (`sk-…`) or Anthropic (`sk-ant-…`).
+  Override with `LLM_PROVIDER` and `LLM_MODEL`.
+- **Setup check:** open `/api/chat` in a browser. It shows the detected provider and the result of a tiny test call.
 - Adding a project updates what the assistant knows automatically.
 
 ## Edit personal details
