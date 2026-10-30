@@ -128,6 +128,10 @@ export const chatUi = {
       he: "נשאלו הרבה שאלות בזמן קצר. נסו שוב בעוד כמה דקות, או כתבו לי במייל.",
       en: "Lots of questions in a short time. Try again in a few minutes, or email me.",
     },
+    busy: {
+      he: "מודל ה-AI עמוס כרגע. נסו שוב בעוד דקה.",
+      en: "The AI model is busy right now. Try again in a minute.",
+    },
     not_configured: {
       he: "העוזר עוד לא מחובר. בינתיים אפשר לכתוב לי במייל.",
       en: "The assistant isn't connected yet. You can email me in the meantime.",

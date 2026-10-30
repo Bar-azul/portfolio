@@ -98,7 +98,8 @@ export async function POST(req: Request) {
     return new Response(stream, { headers });
   } catch (err) {
     console.error("[chat]", err);
-    return json(502, "upstream_error");
+    const busy = /^\w+ (429|500|503|529)/.test(String((err as Error).message));
+    return json(busy ? 503 : 502, busy ? "busy" : "upstream_error");
   }
 }
 

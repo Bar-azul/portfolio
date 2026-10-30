@@ -76,16 +76,24 @@ export async function streamLLM(opts: {
   const maxTokens = opts.maxTokens ?? 1500;
 
   if (provider === "gemini") {
-    // Google retires model names over time; if the chosen one is gone (404), fall back to the
-    // "latest Flash" alias so the chat keeps working without a code change.
-    const candidates = [...new Set([model, "gemini-flash-latest"])];
+    // Try the chosen model, then Google's "latest" aliases. Retire (404) or overload (429/500/503)
+    // on one model moves on to the next; a short retry first smooths over brief load spikes.
+    const candidates = [...new Set([model, "gemini-flash-latest", "gemini-flash-lite-latest"])];
     let lastErr: unknown;
     for (const m of candidates) {
-      try {
-        return await streamGemini({ apiKey: opts.key, model: m, system: opts.system, messages: opts.messages, signal: opts.signal, maxTokens });
-      } catch (err) {
-        lastErr = err;
-        if (!/^gemini 404/.test(String((err as Error).message))) throw err;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          return await streamGemini({ apiKey: opts.key, model: m, system: opts.system, messages: opts.messages, signal: opts.signal, maxTokens });
+        } catch (err) {
+          lastErr = err;
+          const msg = String((err as Error).message);
+          if (opts.signal?.aborted) throw err;
+          const overloaded = /^gemini (429|500|503)/.test(msg);
+          const gone = /^gemini 404/.test(msg);
+          if (!overloaded && !gone) throw err; // bad key, bad request: no point retrying
+          if (gone || attempt === 1) break; // next model
+          await new Promise((r) => setTimeout(r, 700));
+        }
       }
     }
     throw lastErr;
