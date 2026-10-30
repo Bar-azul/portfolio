@@ -21,7 +21,7 @@ export function detectProvider(key: string): Provider {
 }
 
 const DEFAULT_MODEL: Record<Provider, string> = {
-  gemini: "gemini-2.5-flash",
+  gemini: "gemini-3.8-flash",
   openai: "gpt-4.1-mini",
   anthropic: "claude-haiku-5-5",
 };
@@ -72,10 +72,23 @@ export async function streamLLM(opts: {
 }): Promise<ReadableStream<Uint8Array>> {
   const provider = detectProvider(opts.key);
   const model = modelFor(provider);
-  const maxTokens = opts.maxTokens ?? 600;
+  // Newer models may spend part of the budget on reasoning, so leave room for the answer
+  const maxTokens = opts.maxTokens ?? 1500;
 
   if (provider === "gemini") {
-    return streamGemini({ apiKey: opts.key, model, system: opts.system, messages: opts.messages, signal: opts.signal, maxTokens });
+    // Google retires model names over time; if the chosen one is gone (404), fall back to the
+    // "latest Flash" alias so the chat keeps working without a code change.
+    const candidates = [...new Set([model, "gemini-flash-latest"])];
+    let lastErr: unknown;
+    for (const m of candidates) {
+      try {
+        return await streamGemini({ apiKey: opts.key, model: m, system: opts.system, messages: opts.messages, signal: opts.signal, maxTokens });
+      } catch (err) {
+        lastErr = err;
+        if (!/^gemini 404/.test(String((err as Error).message))) throw err;
+      }
+    }
+    throw lastErr;
   }
 
   if (provider === "openai") {

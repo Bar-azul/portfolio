@@ -34,7 +34,7 @@ Every text field takes `{ he: "...", en: "..." }`. Order in the array = order on
 The floating "Ask my AI" assistant answers visitors' questions using only the site's own content
 (`src/content/profile.ts` and `projects.ts`), and links the projects it mentions.
 
-- **Setup:** add `LLM_CV_API_Key` (a Gemini API key; `GEMINI_API_KEY` also works) in Vercel → Project → Settings → Environment Variables, then redeploy.
+- **Setup:** add `LLM_CV_API_Key` (a Gemini API key; `GEMINI_API_KEY` also works; default model `gemini-3.8-flash`, falling back to `gemini-flash-latest` if Google retires it) in Vercel → Project → Settings → Environment Variables, then redeploy.
   Without a key, the chat says it isn't connected yet (in `npm run dev` it returns a local test reply).
 - **Where things live:** `src/app/api/chat/route.ts` (validation, rate limits), `src/lib/chat/prompt.ts`
   (assistant rules), `src/lib/chat/knowledge.ts` (what it knows), `src/lib/chat/gemini.ts` (model call;

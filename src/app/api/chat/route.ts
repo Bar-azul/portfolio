@@ -118,7 +118,7 @@ export async function GET(req: Request) {
   const provider = detectProvider(key);
   const info = { provider, model: modelFor(provider), keyStartsWith: key.slice(0, 4) + "…", keyLength: key.length };
   try {
-    const stream = await streamLLM({ key, system: "Reply with the single word: ok", messages: [{ role: "user", content: "ping" }], maxTokens: 20 });
+    const stream = await streamLLM({ key, system: "Reply with the single word: ok", messages: [{ role: "user", content: "ping" }], maxTokens: 300 });
     const text = (await new Response(stream).text()).trim();
     return new Response(JSON.stringify({ ok: !!text, ...info, reply: text.slice(0, 40) }, null, 2), { headers });
   } catch (err) {
