@@ -46,6 +46,20 @@ The floating "Ask my AI" assistant answers visitors' questions using only the si
 - **Setup check:** open `/api/chat` in a browser. It shows the detected provider and the result of a tiny test call.
 - Adding a project updates what the assistant knows automatically.
 
+## Analytics and Search Console
+
+Set these in Vercel → Settings → Environment Variables, then redeploy (they are read at build time):
+
+| Variable | What it is |
+|---|---|
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement ID (`G-…`). Analytics is off until it is set. |
+| `NEXT_PUBLIC_GSC_VERIFICATION` | Search Console "HTML tag" verification code: only the `content` value. |
+| `NEXT_PUBLIC_SITE_URL` | The site's public address, if you add your own domain. |
+
+Custom GA4 events: `cv_download`, `contact_click` (method: email / whatsapp / linkedin / github),
+`chat_open`, `chat_question` (turn, suggested; never the question text), `chat_error`, `language_switch`.
+The sitemap is at `/sitemap.xml` (both languages, with hreflang) and robots.txt at `/robots.txt`.
+
 ## Edit personal details
 
 `src/content/profile.ts` – name, intro, contact links, experience timeline and skills.

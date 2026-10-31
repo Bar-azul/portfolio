@@ -8,6 +8,8 @@ import "../globals.css";
 import { profile } from "@/content/profile";
 import { dir, isLocale, localePath, locales, t } from "@/lib/i18n";
 import { Header } from "@/components/Header";
+import { Analytics } from "@/components/Analytics";
+import { GSC_VERIFICATION, SITE_URL } from "@/lib/site";
 import { themeInitScript } from "@/components/ThemeToggle";
 import { ChatWidget } from "@/components/ChatWidget";
 import { projects } from "@/content/projects";
@@ -24,7 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: { default: title, template: `%s | ${t(profile.name, locale)}` },
     description: t(profile.intro, locale),
+    metadataBase: new URL(SITE_URL),
     alternates: { canonical: localePath(locale), languages: { en: "/", he: "/he", "x-default": "/" } },
+    ...(GSC_VERIFICATION ? { verification: { google: GSC_VERIFICATION } } : {}),
     openGraph: { title, description: t(profile.intro, locale), locale: locale === "he" ? "he_IL" : "en_US", type: "website" },
   };
 }
@@ -46,6 +50,7 @@ export default async function LocaleLayout({
       <body className="min-h-dvh">
         <Header locale={locale} />
         {children}
+        <Analytics />
         <ChatWidget locale={locale} titles={Object.fromEntries(projects.map((p) => [p.slug, t(p.title, locale)]))} />
       </body>
     </html>

@@ -5,6 +5,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import type { Locale } from "@/content/types";
 import { chatUi, localePath, t } from "@/lib/i18n";
+import { track } from "./Analytics";
 
 type Msg = { role: "user" | "assistant"; content: string; error?: boolean };
 
@@ -77,8 +78,10 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
   }, []);
 
   useEffect(() => {
-    if (open) requestAnimationFrame(() => inputRef.current?.focus());
-  }, [open]);
+    if (!open) return;
+    requestAnimationFrame(() => inputRef.current?.focus());
+    track("chat_open", { lang: locale, page: window.location.pathname });
+  }, [open, locale]);
 
   useEffect(() => {
     const el = scroller.current;
@@ -99,6 +102,12 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
         return;
       }
       const history = [...messages.filter((m) => !m.error), { role: "user" as const, content: q }];
+      // The question text itself is never sent to analytics
+      track("chat_question", {
+        lang: locale,
+        turn: history.filter((m) => m.role === "user").length,
+        suggested: (chatUi.suggestions[locale] as readonly string[]).includes(q) ? 1 : 0,
+      });
       setMessages((m) => [...m, { role: "user", content: q }]);
       setInput("");
       setBusy(true);
@@ -121,6 +130,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
         });
         if (!res.ok || !res.body) {
           const code = (await res.json().catch(() => ({}))).error as keyof typeof chatUi.errors | undefined;
+          track("chat_error", { code: code || `http_${res.status}` });
           const msg = chatUi.errors[code && code in chatUi.errors ? code : "generic"];
           setMessages((m) => [...m, { role: "assistant", content: t(msg, locale), error: true }]);
           return;

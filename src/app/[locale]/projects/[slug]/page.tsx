@@ -20,7 +20,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const p = getProject(slug);
   if (!p) return {};
   const l = locale as Locale;
-  return { title: t(p.title, l), description: t(p.summary, l) };
+  const path = `/projects/${p.slug}`;
+  return {
+    title: t(p.title, l),
+    description: t(p.summary, l),
+    // Each project page is its own canonical page (not the home page), with its other-language twin
+    alternates: {
+      canonical: localePath(l, path),
+      languages: { en: localePath("en", path), he: localePath("he", path), "x-default": localePath("en", path) },
+    },
+    openGraph: { title: t(p.title, l), description: t(p.summary, l), type: "article", url: localePath(l, path) },
+  };
 }
 
 export default async function ProjectPage({ params }: Params) {
