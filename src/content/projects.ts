@@ -74,8 +74,42 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "self-improving-delivery-extraction",
+    kind: "paz",
+    featured: true,
+    status: "building",
+    year: "2026",
+    title: { he: "חילוץ תעודות משלוח שלומד ומשתפר לבד", en: "Self-Improving Delivery Certificate Extraction" },
+    summary: {
+      he: "מערכת AI שמחלצת תעודות משלוח ל-XML עבור SAP, משווה את עצמה כל יום לנתונים שאושרו ב-SAP ומשתפרת מהטעויות שלה.",
+      en: "An AI system that extracts delivery certificates into XML for SAP, checks itself daily against SAP-approved data and improves from its own mistakes.",
+    },
+    problem: {
+      he: "תעודות משלוח מגיעות כסריקות ותמונות בהרבה פורמטים של ספקים. מודל חילוץ שעובד טוב היום מתחיל לטעות כשמגיע פורמט חדש, ותיקון ידני של כל מקרה לא מחזיק לאורך זמן.",
+      en: "Delivery certificates arrive as scans and photos in many supplier layouts. An extraction model that works today starts slipping when a new layout shows up, and fixing each case by hand doesn't hold up over time.",
+    },
+    solution: {
+      he: "מעל צינור החילוץ בניתי שכבת למידה עצמית: כל יום נקלט ייצוא של התעודות שאושרו ב-SAP, והכמות שהתקבלה בתחנה ב-SAP משמשת כאמת המידה (ground truth). המערכת משווה כל חילוץ לערכים המאושרים, מודדת את הדיוק, ומשתמשת בפערים כדי לשפר את החילוץ הבא, עם מינימום התערבות אנושית. התמונות וקובצי ה-XML נשמרים ב-Azure Storage, והעבודה רצה מקומית לפני חיבור ישיר ל-SAP.",
+      en: "On top of the extraction pipeline I'm building a self-learning layer: every day the SAP-approved certificates are ingested, and the station received quantity in SAP is treated as ground truth. The system compares each extraction with the approved values, measures accuracy, and uses the gaps to improve the next extraction with minimal human intervention. Images and XML are stored in Azure Storage, and it runs locally before connecting directly to SAP.",
+    },
+    results: [
+      { he: "אמת מידה יומית מתוך נתוני SAP מאושרים, בלי תיוג ידני", en: "A daily ground truth from approved SAP data, with no manual labeling" },
+      { he: "דיוק נמדד על כל תעודה, וטעויות הופכות לשיפור", en: "Accuracy is measured on every certificate, and mistakes become improvements" },
+    ],
+    topics: ["agents", "evals", "documents", "automation"],
+    tech: ["Python", "LLM", "Structured Outputs", "SAP", "XML", "Blob Storage"],
+    flow: [
+      { he: "תמונת תעודת משלוח", en: "Delivery certificate image" },
+      { he: "חילוץ AI ל-XML", en: "AI extraction to XML" },
+      { he: "ייצוא יומי מאושר מ-SAP", en: "Daily approved SAP export" },
+      { he: "השוואה ומדידת דיוק", en: "Compare and score accuracy" },
+      { he: "למידה מהפערים", en: "Learn from the gaps" },
+    ],
+  },
+  {
     slug: "call-analytics",
     kind: "paz",
+    featured: true,
     status: "production",
     year: "2025",
     title: { he: "אוטומציית הקלטות וניתוח שיחות", en: "Call Analytics & Recording Automation" },
