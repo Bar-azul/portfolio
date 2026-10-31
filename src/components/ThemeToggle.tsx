@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect } from "react";
 import type { Locale } from "@/content/types";
 
 export const THEME_KEY = "theme";
@@ -10,6 +11,28 @@ export const THEME_KEY = "theme";
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="dark"}})();`;
 
+/** The theme to use: the saved choice, else the device setting. */
+function preferredTheme(): "light" | "dark" {
+  try {
+    const t = localStorage.getItem(THEME_KEY);
+    if (t === "light" || t === "dark") return t;
+  } catch {
+    // storage blocked: fall through to the device setting
+  }
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+/**
+ * Switching language swaps the root layout, which rebuilds <html> without running the
+ * head script again. Re-apply the theme whenever the toggle mounts (before paint).
+ */
+function useApplyTheme() {
+  useLayoutEffect(() => {
+    const t = preferredTheme();
+    if (document.documentElement.dataset.theme !== t) document.documentElement.dataset.theme = t;
+  }, []);
+}
+
 const label = {
   he: "החלפה בין מצב בהיר לכהה",
   en: "Switch between light and dark mode",
@@ -17,6 +40,7 @@ const label = {
 
 /** Sun in dark mode (switch to light), moon in light mode (switch to dark). Icons swap with CSS, so server and client markup match. */
 export function ThemeToggle({ locale }: { locale: Locale }) {
+  useApplyTheme();
   const toggle = () => {
     const root = document.documentElement;
     const next = root.dataset.theme === "light" ? "dark" : "light";
