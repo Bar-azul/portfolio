@@ -112,7 +112,7 @@ export default async function ProjectPage({ params }: Params) {
                     href={l.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-block rounded-lg bg-signal px-4 py-2 font-semibold text-canvas hover:bg-[#ffc66f]"
+                    className="inline-block rounded-lg bg-signal px-4 py-2 font-semibold text-on-signal hover:bg-signal-hover"
                   >
                     {t(l.label, locale)}
                   </a>

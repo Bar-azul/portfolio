@@ -74,7 +74,7 @@ export function Contact({ locale }: { locale: Locale }) {
                 dir={l.primary ? "ltr" : undefined}
                 className={
                   l.primary
-                    ? "inline-block rounded-lg bg-signal px-5 py-3 font-semibold text-canvas hover:bg-[#ffc66f]"
+                    ? "inline-block rounded-lg bg-signal px-5 py-3 font-semibold text-on-signal hover:bg-signal-hover"
                     : "inline-block rounded-lg border border-line px-5 py-3 font-semibold hover:border-muted"
                 }
               >

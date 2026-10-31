@@ -182,7 +182,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
           type="button"
           data-chat-launch
           onClick={() => setOpen(true)}
-          className="chat-launcher fixed z-50 flex items-center gap-2 rounded-full bg-signal py-3 pe-5 ps-4 font-semibold text-canvas shadow-[0_8px_30px_rgb(0_0_0/0.45)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          className="chat-launcher fixed z-50 flex items-center gap-2 rounded-full bg-signal py-3 pe-5 ps-4 font-semibold text-on-signal shadow-[0_8px_30px_var(--color-shadow)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
           style={{
             bottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
             // start side: left in English, right in Hebrew
@@ -206,10 +206,10 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
           aria-modal="false"
           aria-label={t(chatUi.title, locale)}
           onKeyDown={(e) => e.key === "Escape" && close()}
-          className="chat-panel fixed z-50 flex flex-col overflow-hidden rounded-2xl border border-line bg-canvas shadow-[0_20px_60px_rgb(0_0_0/0.55)]"
+          className="chat-panel fixed z-50 flex flex-col overflow-hidden rounded-2xl border border-line bg-canvas shadow-[0_20px_60px_var(--color-shadow)]"
         >
           <header className="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
-            <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-lg bg-signal text-[13px] font-bold text-canvas">
+            <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-lg bg-signal text-[13px] font-bold text-on-signal">
               BA
             </span>
             <div className="min-w-0 flex-1">
@@ -256,7 +256,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
 
             {messages.map((m, i) =>
               m.role === "user" ? (
-                <div key={i} className="ms-auto w-fit max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-se-sm bg-signal px-3.5 py-2.5 text-canvas">
+                <div key={i} className="ms-auto w-fit max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-se-sm bg-signal px-3.5 py-2.5 text-on-signal">
                   {m.content}
                 </div>
               ) : (
@@ -312,7 +312,7 @@ export function ChatWidget({ locale, titles }: { locale: Locale; titles: Record<
                 type="submit"
                 disabled={busy || !input.trim()}
                 aria-label={t(chatUi.send, locale)}
-                className="grid size-11 shrink-0 place-items-center rounded-xl bg-signal text-canvas transition-opacity disabled:opacity-40"
+                className="grid size-11 shrink-0 place-items-center rounded-xl bg-signal text-on-signal transition-opacity disabled:opacity-40"
               >
                 <svg viewBox="0 0 20 20" className="size-5 rtl:-scale-x-100" fill="currentColor">
                   <path d="M3.1 2.3a.75.75 0 0 0-.98.93l1.8 5.53a.75.75 0 0 0 .6.5l6.03.98-6.03.98a.75.75 0 0 0-.6.5l-1.8 5.54a.75.75 0 0 0 .98.92l14.5-6.75a.75.75 0 0 0 0-1.36L3.1 2.3Z" />

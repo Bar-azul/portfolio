@@ -8,6 +8,7 @@ import "../globals.css";
 import { profile } from "@/content/profile";
 import { dir, isLocale, localePath, locales, t } from "@/lib/i18n";
 import { Header } from "@/components/Header";
+import { themeInitScript } from "@/components/ThemeToggle";
 import { ChatWidget } from "@/components/ChatWidget";
 import { projects } from "@/content/projects";
 
@@ -38,7 +39,10 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return (
-    <html lang={locale} dir={dir(locale)}>
+    <html lang={locale} dir={dir(locale)} data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-dvh">
         <Header locale={locale} />
         {children}

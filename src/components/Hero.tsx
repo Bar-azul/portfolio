@@ -24,7 +24,7 @@ export function Hero({ locale }: { locale: Locale }) {
             <a
               href={profile.cv}
               download
-              className="rounded-lg bg-signal px-5 py-2.5 font-semibold text-canvas transition-colors hover:bg-[#ffc66f]"
+              className="rounded-lg bg-signal px-5 py-2.5 font-semibold text-on-signal transition-colors hover:bg-signal-hover"
             >
               {t(ui.cv, locale)}
             </a>

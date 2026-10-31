@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* `light:` variant, e.g. light:hidden */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
 @theme {
   --color-canvas: #0f1720;
   --color-surface: #17222e;
@@ -9,7 +12,35 @@
   --color-muted: #8da0b1;
   --color-signal: #ffb547;
   --color-live: #5fd39a;
+  --color-on-signal: #0f1720;
+  --color-signal-hover: #ffc66f;
+  --color-dot: rgb(141 160 177 / 0.16);
+  --color-shadow: rgb(0 0 0 / 0.5);
   --font-sans: "IBM Plex Sans Hebrew", system-ui, sans-serif;
+}
+
+/* Light theme: same tokens, redefined. Dark is the default look. */
+:root { color-scheme: dark; }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef1f5;
+  --color-line: #d7dde4;
+  --color-ink: #16212c;
+  --color-muted: #5a6a78;
+  --color-signal: #b97100;
+  --color-live: #16a36a;
+  --color-on-signal: #ffffff;
+  --color-signal-hover: #a36300;
+  --color-dot: rgb(90 106 120 / 0.2);
+  --color-shadow: rgb(15 23 32 / 0.16);
+}
+
+/* Smooth colour change only while switching themes, so nothing else animates */
+html.theme-switching,
+html.theme-switching * {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, fill 0.25s ease !important;
 }
 
 html {
@@ -27,13 +58,13 @@ body {
 
 /* The workflow-canvas dot grid used behind the hero and project pages */
 .dot-grid {
-  background-image: radial-gradient(circle at 1px 1px, rgb(141 160 177 / 0.16) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, var(--color-dot) 1px, transparent 0);
   background-size: 22px 22px;
 }
 
 ::selection {
   background: var(--color-signal);
-  color: var(--color-canvas);
+  color: var(--color-on-signal);
 }
 
 :focus-visible {
