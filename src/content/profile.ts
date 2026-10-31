@@ -33,11 +33,10 @@ export const profile = {
     { value: "200+", label: { he: "סניפים בצנרת נתונים אחת", en: "branches on one data pipeline" } as L },
   ],
 
-  // TODO: replace linkedin with your real profile URL
   email: "bar3882@gmail.com",
   phone: "+972549466126",
   github: "https://github.com/Bar-azul",
-  linkedin: "https://www.linkedin.com/",
+  linkedin: "https://www.linkedin.com/in/bar-azulay-154900244/",
 
   experience: [
     {
@@ -86,11 +85,15 @@ export const profile = {
     },
     {
       group: { he: "ענן ואוטומציה", en: "Cloud & Automation" } as L,
-      items: ["Azure Functions", "Container Apps", "Blob Storage", "Service Bus", "APIM", "Application Insights", "Microsoft Graph", "Power Automate", "n8n", "Playwright"],
+      items: ["Azure Functions", "Container Apps", "Blob Storage", "Service Bus", "APIM", "Application Insights", "Microsoft Graph", "Power Automate", "n8n", "Playwright", "AWS"],
     },
     {
       group: { he: "פלטפורמות", en: "Platforms" } as L,
       items: ["Wonderful", "WhatsApp Cloud API", "Supabase", "Vercel"],
+    },
+    {
+      group: { he: "כלי פיתוח מבוססי AI", en: "AI coding tools" } as L,
+      items: ["Cursor", "Claude Code", "GitHub Copilot"],
     },
     {
       group: { he: "DevOps", en: "DevOps" } as L,
