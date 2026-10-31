@@ -32,7 +32,7 @@ export const projects: Project[] = [
       { he: "פרופיל ובדיקות רגרסיה לכל עירייה", en: "Per-municipality profiles with regression tests" },
     ],
     topics: ["agents", "evals", "documents", "automation"],
-    tech: ["Python", "Azure Functions", "Wonderful", "Azure Document Intelligence", "Blob Storage", "Service Bus"],
+    tech: ["Python", "Azure Functions", "Wonderful", "Azure Document Intelligence", "Blob Storage", "Service Bus", "AI Agents", "LLM Evaluation"],
     flow: [
       { he: "מסמך דרישת תשלום", en: "Fee notice" },
       { he: "חילוץ נתונים", en: "Document extraction" },
@@ -64,7 +64,7 @@ export const projects: Project[] = [
       { he: "תוצאות על מפה עם סינון לפי עיר, חברה וסוג טעינה", en: "Results on a map, filterable by city, operator and charger type" },
     ],
     topics: ["agents", "automation", "web"],
-    tech: ["Python", "Azure OpenAI", "RAG", "ChromaDB", "Streamlit", "Folium"],
+    tech: ["Python", "Azure OpenAI", "RAG", "ChromaDB", "Streamlit", "Folium", "AI Agents", "Semantic Search"],
     flow: [
       { he: "API של סלופארק ומפעילים נוספים", en: "Cellopark API and other operators" },
       { he: "איחוד נתונים ו-embeddings", en: "Data merge and embeddings" },
@@ -97,7 +97,7 @@ export const projects: Project[] = [
       { he: "דיוק נמדד על כל תעודה, וטעויות הופכות לשיפור", en: "Accuracy is measured on every certificate, and mistakes become improvements" },
     ],
     topics: ["agents", "evals", "documents", "automation"],
-    tech: ["Python", "LLM", "Structured Outputs", "SAP", "XML", "Blob Storage"],
+    tech: ["Python", "LLM", "Structured Outputs", "SAP", "XML", "Blob Storage", "LLM Evaluation"],
     flow: [
       { he: "תמונת תעודת משלוח", en: "Delivery certificate image" },
       { he: "חילוץ AI ל-XML", en: "AI extraction to XML" },
@@ -162,7 +162,7 @@ export const projects: Project[] = [
       { he: "חיבור יציב לאחר תיקון ה-WebSocket", en: "Stable connection after the WebSocket fix" },
     ],
     topics: ["agents", "web"],
-    tech: ["JavaScript", "WebSockets", "HTML/CSS", "Azure Storage", "Wonderful"],
+    tech: ["JavaScript", "WebSockets", "HTML/CSS", "Azure Storage", "Wonderful", "AI Agents"],
     flow: [
       { he: "מבקר באתר", en: "Site visitor" },
       { he: "וידג׳ט JS עם RTL", en: "JS widget with RTL" },
@@ -193,7 +193,7 @@ export const projects: Project[] = [
       { he: "דיווח הנהלה אוטומטי במקום ריכוז ידני", en: "Automated management reporting instead of manual compilation" },
     ],
     topics: ["agents", "evals", "automation"],
-    tech: ["Python", "LLM", "Structured Outputs", "Azure Functions", "Power Automate"],
+    tech: ["Python", "LLM", "Structured Outputs", "Azure Functions", "Power Automate", "LLM Evaluation"],
     flow: [
       { he: "תשובות סקר", en: "Survey responses" },
       { he: "ניתוח LLM עם פלט מובנה", en: "LLM analysis, structured output" },
